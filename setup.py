@@ -7,14 +7,14 @@ with open('README.rst') as f:
 
 setup(
     name='py-ecg-detectors',
-    version='0.9.2',
+    version='0.9.4',
     description="Seven ECG heartbeat detection algorithms and timedomain heartrate variability analysis",
     long_description=long_description,
     author='Luis Howell, Bernd Porr',
     author_email='luisbhowell@gmail.com, bernd.porr@glasgow.ac.uk',
     py_modules=['ecgdetectors','hrv'],
     include_package_data=True,
-    install_requires=['numpy','pywt','pathlib','scipy','biosppy','gatspy','pywavelets'],
+    install_requires=['numpy','pathlib','scipy','biosppy','gatspy','pywavelets'],
     zip_safe=False,
     url='https://github.com/berndporr/py-ecg-qrs-detectors',
     license='GPL 3.0',
