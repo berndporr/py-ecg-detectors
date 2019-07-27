@@ -1,6 +1,5 @@
 import numpy as np
 import pandas as pd
-import wfdb
 import _tester_utils
 import pathlib
 import os
