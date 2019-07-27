@@ -127,6 +127,21 @@ The example `hrv_time_domain_analysis.py` calculates the heartrate
 variability in the timedomain.
 
 
+Benchmarking
+============
+
+`run_all_benchmarks.py` calculates the R peak timestamps
+for all detectors, the true/false detections/misses and
+saves them in .csv files. See the scripts how to obtain the
+ECG data such as the MIT db.
+
+`show_stats_plots.py` takes then the .csv files displays
+the results of the different detectors and calculates the stats.
+
+`hrv_time_domain_analysis.py` performs a timedomain analysis
+between sitting and a math test using the Engzee detector and
+the wavelet detector for comparison.
+
 
 Authors
 =======
