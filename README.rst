@@ -16,7 +16,7 @@ Before the detectors can be used the class must first be initalised with the sam
   from ecgdetectors import Detectors
   detectors = Detectors(fs)
 
-See usage_example.py for an example of how to use the detectors.
+See `usage_example.py` for an example of how to use the detectors.
 
 Hamilton
 --------
@@ -75,6 +75,57 @@ Matched Filter
 FIR matched filter using template of QRS complex. Template provided for 250Hz and 360Hz. Uses the Pan and Tompkins thresolding method. Usage::
 
   r_peaks = detectors.matched_filter_detector(unfiltered_ecg)
+
+
+Heartrate variability analysis
+==============================
+
+The module `hrv` provides a large collection of heartrate
+variability measures which are methods of the class `HRV`::
+
+  HR(self, rr_samples)
+     Calculate heart-rates from R peak samples.
+
+  NN20(self, rr_samples)
+     Calculate NN20, the number of pairs of successive
+     NNs that differ by more than 20 ms.
+
+  NN50(self, rr_samples)
+     Calculate NN50, the number of pairs of successive
+     NNs that differ by more than 50 ms.
+
+  RMSSD(self, rr_samples, normalise=False)
+     Calculate RMSSD (root mean square of successive differences).
+
+  SDANN(self, rr_samples, average_period=5.0, normalise=False)
+     Calculate SDANN, the standard deviation of the average
+     RR intervals calculated over short periods.
+
+  SDNN(self, rr_samples, normalise=False)
+     Calculate SDNN, the standard deviation of NN intervals.
+
+  SDSD(self, rr_samples)
+     Calculate SDSD (standard deviation of successive differences),
+     the standard deviation of the successive differences between adjacent NNs.
+
+  fAnalysis(self, rr_samples)
+     Frequency analysis to calc self.lf, self.hf,
+     returns the LF/HF-ratio.
+
+  pNN20(self, rr_samples)
+     Calculate pNN20, the proportion of NN20 divided by total number of NNs.
+
+  pNN50(self, rr_samples)
+     Calculate pNN50, the proportion of NN50 divided by total number of NNs.
+
+For parameters and additional info use the python help function::
+
+  import hrv
+  help(hrv)
+
+The example `hrv_time_domain_analysis.py` calculates the heartrate
+variability in the timedomain.
+
 
 
 Authors
