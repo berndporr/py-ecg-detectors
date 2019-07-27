@@ -1,11 +1,12 @@
-#
-# A collection of 7 ECG heartbeat detection algorithms implemented
-# in Python. Developed in conjunction with a new ECG database:
-# http://researchdata.gla.ac.uk/716/.
-#
-# Copyright (C) 2019 Luis Howell & Bernd Porr
-# GPL GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
-#
+"""
+A collection of 7 ECG heartbeat detection algorithms implemented
+in Python. Developed in conjunction with a new ECG database:
+http://researchdata.gla.ac.uk/716/.
+
+Copyright (C) 2019 Luis Howell & Bernd Porr
+GPL GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
+"""
+
 import numpy as np
 import pywt
 import pathlib
