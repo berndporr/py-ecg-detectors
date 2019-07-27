@@ -75,3 +75,10 @@ Matched Filter
 FIR matched filter using template of QRS complex. Template provided for 250Hz and 360Hz. Uses the Pan and Tompkins thresolding method. Usage::
 
   r_peaks = detectors.matched_filter_detector(unfiltered_ecg)
+
+
+Authors
+=======
+
+Luis Howell, luisbhowell@gmail.com
+Bernd Porr, bernd.porr@glasgow.ac.uk
