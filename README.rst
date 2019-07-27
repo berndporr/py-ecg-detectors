@@ -90,4 +90,4 @@ citation / DOI
 
 DOI: 10.5281/zenodo.3353397 
 
-https://zenodo.org/badge/latestdoi/199200871
+https://doi.org/10.5281/zenodo.3353397
