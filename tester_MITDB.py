@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import _tester_utils
+import wfdb
 import pathlib
 import os
 from ecgdetectors import Detectors
