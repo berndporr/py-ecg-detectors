@@ -16,7 +16,7 @@ Before the detectors can be used the class must first be initalised with the sam
   from ecgdetectors import Detectors
   detectors = Detectors(fs)
 
-See the https://github.com/luishowell/ecg-detectors for usage examples.
+See usage_example.py for an example of how to use the detectors.
 
 Hamilton
 --------
