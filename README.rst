@@ -83,3 +83,6 @@ Authors
 Luis Howell, luisbhowell@gmail.com
 
 Bernd Porr, bernd.porr@glasgow.ac.uk
+
+
+[![DOI](https://zenodo.org/badge/199200871.svg)](https://zenodo.org/badge/latestdoi/199200871)
