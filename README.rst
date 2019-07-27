@@ -85,4 +85,9 @@ Luis Howell, luisbhowell@gmail.com
 Bernd Porr, bernd.porr@glasgow.ac.uk
 
 
-[![DOI](https://zenodo.org/badge/199200871.svg)](https://zenodo.org/badge/latestdoi/199200871)
+citation / DOI
+==============
+
+DOI: 10.5281/zenodo.3353397 
+
+https://zenodo.org/badge/latestdoi/199200871
