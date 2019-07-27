@@ -304,35 +304,3 @@ class HRV:
                 self.hf = self.hf + self.f_hr[i]
         # hf
         return self.lf/self.hf
-
-    
-    def hrv_toolkit(self, rr_samples):
-        """
-        Calculating the HRV parameters with the HRV toolkit.
-        It calls the commandline file get_hrv and then parses the output.
-        To be able to run check out the subdir HRV.src and compile/install
-        the binaries in /usr/local/bin.
-        rr_samples are the samples numbers of the R-peaks.
-        Returns the lf/hf ratio and also provides self.sdnn, 
-        self.rmssd, self.lf and self.hf.
-        """
-        m = np.hstack((np.vstack(self._timestamps(rr_samples[1:])/1000),
-                       np.vstack(self._intervals(rr_samples)/1000)))
-        np.savetxt("hr.txt",m,delimiter = ' ', newline=" N\n")
-        r = subprocess.check_output(['get_hrv', '-s', '-R', 'hr.txt'])
-        r = str(r)
-        a = r.split("\\n")
-        for b in a:
-            x = b.split("=")
-            #print(x)
-            if "SDNN" in x[0]:
-                self.sdnn = float(x[1])
-            elif "rMSSD" in x[0]:
-                self.rmssd = float(x[1])
-            elif "LF PWR" in x[0]:
-                self.lf = float(x[1])
-            elif "HF PWR" in x[0]:
-                self.hf = float(x[1])
-            elif "LF/HF" in x[0]:
-                self.lfhf = float(x[1])
-        return self.lfhf
