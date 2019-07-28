@@ -14,10 +14,13 @@ Linux / Mac::
   pip3 install py-ecg-detectors [--user]
 
 Windows::
+
   pip install py-ecg-detectors [--user]
 
 From source::
+
   python3 setup.py install [--user]
+
 
 Use the option `--user` if you don't have system-wise write permission.
 
