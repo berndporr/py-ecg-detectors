@@ -38,8 +38,7 @@ def get_sensivities(results_df, detector_name, experiment=None):
     for tp,fn in zip(total_tp,total_fn):
             if (tp + fn) > 0:
                 s = tp/(tp+fn)*100.0
-                if s > 0:
-                        se.append(s)
+                se.append(s)
 
     return np.array(se)
 
@@ -59,11 +58,13 @@ def get_result(results_df, det_names, experiment=None):
 def compare_det_test(results_df, detector_name1, detector_name2, experiment=None):
     se1 = get_sensivities(results_df, detector_name1, experiment)
     if len(se1) < 2:
-            return 0
+        return 0
     se2 = get_sensivities(results_df, detector_name2, experiment)
     if len(se2) < 2:
-            return 0
+        return 0
     l = min(len(se1),len(se2))
+    if (l < 20):
+        return None
     #print("1:",se1[:l])
     #print("2:",se2[:l])
     try:
@@ -80,6 +81,8 @@ def compare_cables(results_df1,results_df2,det1,experiment):
     if len(se2) < 2:
         return 0
     l = min(len(se1),len(se2))
+    if (l < 20):
+        return None
     try:
         t,p = stats.wilcoxon(se1[:l],se2[:l])
         return p
@@ -95,6 +98,8 @@ def compare_experiments(results_df1,det1):
     if len(se2) < 2:
         return 0
     l = min(len(se1),len(se2))
+    if (l < 20):
+        return None
     try:
         t,p = stats.wilcoxon(se1[:l],se2[:l])
         return p
@@ -104,8 +109,8 @@ def compare_experiments(results_df1,det1):
 
 def single_plot(data, std, y_label, title = None):
     fig, ax = plt.subplots()
-    plot_names = ['Elgendi et al', 'Matched Filter', 'Kalidas and Tamil', 'Engzee Mod', 'Christov', 'Hamilton', 'Pan and Tompkins']
-    x_pos = np.arange(len(plot_names))
+    _tester_utils.det_fullnames = ['Elgendi et al', 'Matched Filter', 'Kalidas and Tamil', 'Engzee Mod', 'Christov', 'Hamilton', 'Pan and Tompkins']
+    x_pos = np.arange(len(_tester_utils.det_fullnames))
 
     fig.set_size_inches(10, 7)
     rects1 = ax.bar(x_pos, data, yerr=std, width = 0.65, align='center', alpha=0.5, ecolor='black', capsize=10)
@@ -113,7 +118,7 @@ def single_plot(data, std, y_label, title = None):
     ax.set_ylabel(y_label)
     ax.set_xlabel('Detector')
     ax.set_xticks(x_pos)
-    ax.set_xticklabels(plot_names)
+    ax.set_xticklabels(_tester_utils.det_fullnames)
 
     if title!=None:
         ax.set_title(title)
@@ -125,8 +130,8 @@ def single_plot(data, std, y_label, title = None):
 
 def double_plot(data1, std1, data2, std2, y_label, legend1, legend2, title=None):
     fig, ax = plt.subplots()
-    plot_names = ['Elgendi et al', 'Matched Filter', 'Kalidas and Tamil', 'Engzee Mod', 'Christov', 'Hamilton', 'Pan and Tompkins']
-    x_pos = np.arange(len(plot_names))
+    _tester_utils.det_fullnames = ['Elgendi et al', 'Matched Filter', 'Kalidas and Tamil', 'Engzee Mod', 'Christov', 'Hamilton', 'Pan and Tompkins']
+    x_pos = np.arange(len(_tester_utils.det_fullnames))
 
     fig.set_size_inches(10, 7)
     width = 0.4
@@ -136,7 +141,7 @@ def double_plot(data1, std1, data2, std2, y_label, legend1, legend2, title=None)
     ax.set_ylabel(y_label)
     ax.set_xlabel('Detector')
     ax.set_xticks(x_pos + width / 2)
-    ax.set_xticklabels(plot_names)
+    ax.set_xticklabels(_tester_utils.det_fullnames)
     ax.legend((rects1[0], rects2[0]), (legend1, legend2))
 
     if title!=None:
@@ -156,6 +161,19 @@ def print_stat(p):
         s = "*"
     print('{:03.2f}{} & '.format(p,s),end='')
 
+def print_detector_comparision_table(title,datafile,experiment=None):
+    print(title)
+    print("      & ",end='')
+    for detlong1 in _tester_utils.det_fullnames:
+        print(detlong1," & ",end='')
+    print("\\\\")
+    for det1,detlong1 in zip(_tester_utils.det_names,_tester_utils.det_fullnames):
+        print(detlong1," & ",end='')
+        for det2,detlong2 in zip(_tester_utils.det_names,_tester_utils.det_fullnames):
+            p = compare_det_test(datafile, det1, det2, experiment)
+            print_stat(p)
+        print("\\\\")
+    print()
 
 # GUDB
 gudb_cs_results = pd.read_csv('results_GUDB_chest_strap.csv', dtype=int, index_col=0)
@@ -164,48 +182,18 @@ gudb_cable_results = pd.read_csv('results_GUDB_loose_cables.csv', dtype=int, ind
 # MITDB
 mitdb_results = pd.read_csv('results_MITDB.csv', dtype=int, index_col=0)
 
-plot_names = ['Elgendi et al', 'Matched Filter', 'Kalidas and Tamil', 'Engzee Mod', 'Christov', 'Hamilton', 'Pan and Tompkins']
 experiment_names = ['sitting','maths','walking','hand_bike','jogging']
 output_names = ['TP', 'FP', 'FN', 'TN']
 
-print("MIT")
-for det1 in _tester_utils.det_names:
-    for det2 in _tester_utils.det_names:
-        p = compare_det_test(mitdb_results, det1, det2)
-        print_stat(p)
-    print("\\\\")
+print_detector_comparision_table("MIT database",mitdb_results)
 
+print_detector_comparision_table("EINTHOVEN SITTING",gudb_cable_results,'sitting')
+print_detector_comparision_table("CHEST STRAP SITTING",gudb_cs_results,'sitting')
 
-print("CHEST STRAP SITTING")
-for det1 in _tester_utils.det_names:
-    for det2 in _tester_utils.det_names:
-        p = compare_det_test(gudb_cs_results, det1, det2, 'sitting')
-        print_stat(p)
-    print("\\\\")
+print_detector_comparision_table("EINTHOVEN JOGGING",gudb_cable_results,'jogging')
+print_detector_comparision_table("CHEST STRAP JOGGING",gudb_cs_results,'jogging')
 
-
-print("CHEST STRAP JOGGING")
-for det1 in _tester_utils.det_names:
-    for det2 in _tester_utils.det_names:
-        p = compare_det_test(gudb_cs_results, det1, det2, 'jogging')
-        print_stat(p)
-    print("\\\\")
-
-    
-print("LOOSE CABLE SITTING")
-for det1 in _tester_utils.det_names:
-    for det2 in _tester_utils.det_names:
-        p = compare_det_test(gudb_cable_results, det1, det2, 'sitting')
-        print_stat(p)
-    print("\\\\")
-
-
-print("LOOSE CABLE JOGGING")
-for det1 in _tester_utils.det_names:
-    for det2 in _tester_utils.det_names:
-        p = compare_det_test(gudb_cable_results, det1, det2, 'jogging')
-        print_stat(p)
-    print("\\\\")
+print("\n\n\n")
 
 print("CHEST STRAP VS EINTH")
 for exp1 in ['sitting','jogging']:
@@ -215,6 +203,7 @@ for exp1 in ['sitting','jogging']:
         print_stat(p)
     print("\\\\")
 
+print("\n\n\n")
 
 print("LOOSE CABLES: SITTING VS JOGGING")
 for det1 in _tester_utils.det_names:
@@ -222,6 +211,7 @@ for det1 in _tester_utils.det_names:
     print_stat(p)
 print("\\\\")
 
+print("\n\n\n")
 
 print("CHEST STRAP: SITTING VS JOGGING")
 for det1 in _tester_utils.det_names:
@@ -229,6 +219,7 @@ for det1 in _tester_utils.det_names:
     print_stat(p)
 print("\\\\")
 
+print("\n\n\n")
 
 # calculating results
 mitdb_avg,mitdb_std = get_result(mitdb_results, _tester_utils.det_names)

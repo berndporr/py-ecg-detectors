@@ -61,7 +61,6 @@ class MITDB_test:
 
     def classifer_test_all(self, tolerance=0):
 
-        det_names = ['two_average', 'matched_filter', 'swt', 'engzee', 'christov', 'hamilton', 'pan_tompkins']
         output_names = ['TP', 'FP', 'FN', 'TN']
 
         total_records = 0
@@ -69,10 +68,10 @@ class MITDB_test:
             if file.endswith(".dat"):
                 total_records = total_records + 1
 
-        total_results = np.zeros((total_records, 4*len(det_names)), dtype=int)
+        total_results = np.zeros((total_records, 4*len(_tester_utils.det_names)), dtype=int)
 
         counter = 0
-        for det_name in det_names:
+        for det_name in _tester_utils.det_names:
 
             print('\n'+det_name)
 
@@ -86,7 +85,7 @@ class MITDB_test:
 
         col_labels = []
 
-        for det_name in det_names:
+        for det_name in _tester_utils.det_names:
                 for output_name in output_names:
                     label = det_name+" "+output_name
                     col_labels.append(label)

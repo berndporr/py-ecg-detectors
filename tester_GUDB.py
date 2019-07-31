@@ -76,13 +76,12 @@ class GUDB_test:
 
     def classifer_test_all(self, tolerance=0, config="chest_strap"):
 
-        det_names = ['two_average', 'matched_filter', 'swt', 'engzee', 'christov', 'hamilton', 'pan_tompkins']
         output_names = ['TP', 'FP', 'FN', 'TN']
 
-        total_results = np.zeros((Ecg.total_subjects, 4*len(Ecg.experiments)*len(det_names)), dtype=int)
+        total_results = np.zeros((Ecg.total_subjects, 4*len(Ecg.experiments)*len(_tester_utils.det_names)), dtype=int)
 
         counter = 0
-        for det_name in det_names:
+        for det_name in _tester_utils.det_names:
 
             print('\n'+config+" "+det_name+":")
 
@@ -96,7 +95,7 @@ class GUDB_test:
         index_labels = np.arange(Ecg.total_subjects)
         col_labels = []
 
-        for det_name in det_names:
+        for det_name in _tester_utils.det_names:
             for experiment_name in Ecg.experiments:
                 for output_name in output_names:
                     label = det_name+" "+experiment_name+" "+output_name

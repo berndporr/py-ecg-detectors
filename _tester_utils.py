@@ -3,6 +3,7 @@ from ecgdetectors import Detectors
 from datetime import datetime
 
 det_names = ['two_average', 'matched_filter', 'swt', 'engzee', 'christov', 'hamilton', 'pan_tompkins']
+det_fullnames = ['Elgendi', 'Matched', 'Kalidas', 'Engzee', 'Christov', 'Hamilton', 'Pan']
 
 def sort_MIT_annotations(ann):
     beat_labels = ['N', 'L', 'R', 'B', 'A', 'a', 'J', 'S', 'V', 'r', 'F', 'e', 'j', 'n', 'E', '/', 'f', 'Q', '?']
