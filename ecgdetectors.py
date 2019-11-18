@@ -9,7 +9,10 @@ GPL GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
 
 import numpy as np
 import pywt
-import pathlib
+try:
+    import pathlib
+except ImportError:
+    import pathlib2 as pathlib
 import scipy.signal as signal
 from biosppy import ecg
 
@@ -21,7 +24,7 @@ class Detectors:
     The argument ecg_in_samples is a single channel ECG in volt
     at the given sample rate.
     """
-    
+
     def __init__(self, sampling_frequency):
         """
         The constructor takes the sampling rate in Hz of the ECG data.
@@ -33,10 +36,10 @@ class Detectors:
 
     def hamilton_detector(self, unfiltered_ecg):
         """
-        P.S. Hamilton, 
+        P.S. Hamilton,
         Open Source ECG Analysis Software Documentation, E.P.Limited, 2002.
         """
-        
+
         f1 = 8/self.fs
         f2 = 16/self.fs
 
@@ -66,7 +69,7 @@ class Detectors:
 
         i=0
         idx = []
-        peaks = []  
+        peaks = []
 
         for i in range(len(ma)):
 
@@ -75,7 +78,7 @@ class Detectors:
                     peak = i
                     peaks.append(i)
 
-                    if ma[peak] > th and (peak-QRS[-1])>0.3*self.fs:        
+                    if ma[peak] > th and (peak-QRS[-1])>0.3*self.fs:
                         QRS.append(peak)
                         idx.append(i)
                         s_pks.append(ma[peak])
@@ -112,12 +115,12 @@ class Detectors:
 
         return QRS
 
-    
+
     def christov_detector(self, unfiltered_ecg):
         """
-        Ivaylo I. Christov, 
-        Real time electrocardiogram QRS detection using combined 
-        adaptive threshold, BioMedical Engineering OnLine 2004, 
+        Ivaylo I. Christov,
+        Real time electrocardiogram QRS detection using combined
+        adaptive threshold, BioMedical Engineering OnLine 2004,
         vol. 3:28, 2004.
         """
         total_taps = 0
@@ -138,7 +141,7 @@ class Detectors:
 
         Y = []
         for i in range(1, len(MA2)-1):
-            
+
             diff = abs(MA2[i+1]-MA2[i-1])
 
             Y.append(diff)
@@ -193,9 +196,9 @@ class Detectors:
                     newM5 = MM[-1]
                 MM.append(newM5)
                 if len(MM)>5:
-                    MM.pop(0)    
-                M = np.mean(MM)    
-            
+                    MM.pop(0)
+                M = np.mean(MM)
+
             elif QRS and i > QRS[-1]+ms200 and i < QRS[-1]+ms1200:
 
                 M = np.mean(MM)*M_slope[i-(QRS[-1]+ms200)]
@@ -229,7 +232,7 @@ class Detectors:
 
             if not QRS and MA3[i]>MFR:
                 QRS.append(i)
-            
+
             elif QRS and i > QRS[-1]+ms200 and MA3[i]>MFR:
                 QRS.append(i)
                 if len(QRS)>2:
@@ -239,10 +242,10 @@ class Detectors:
                     Rm = int(np.mean(RR))
 
         QRS.pop(0)
-        
+
         return QRS
 
-    
+
     def engzee_detector(self, unfiltered_ecg):
         """
         C. Zeelenberg, A single scan algorithm for QRS detection and
@@ -252,7 +255,7 @@ class Detectors:
         Electrocardiogram Segmentation for Finger Based ECG
         Biometrics”, BIOSIGNALS 2012, pp. 49-54, 2012.
         """
-                
+
         f1 = 48/self.fs
         f2 = 52/self.fs
         b, a = signal.butter(4, [f1*2, f2*2], btype='bandstop')
@@ -262,13 +265,13 @@ class Detectors:
         for i in range(4, len(diff)):
             diff[i] = filtered_ecg[i]-filtered_ecg[i-4]
 
-        ci = [1,4,6,4,1]        
+        ci = [1,4,6,4,1]
         low_pass = signal.lfilter(ci, 1, diff)
 
         low_pass[:int(0.2*self.fs)] = 0
-      
+
         ms200 = int(0.2*self.fs)
-        ms1200 = int(1.2*self.fs)        
+        ms1200 = int(1.2*self.fs)
         ms160 = int(0.16*self.fs)
         neg_threshold = int(0.01*self.fs)
 
@@ -307,9 +310,9 @@ class Detectors:
             elif QRS and i == QRS[-1]+ms200:
                 MM.append(newM5)
                 if len(MM)>5:
-                    MM.pop(0)    
-                M = np.mean(MM)    
-            
+                    MM.pop(0)
+                M = np.mean(MM)
+
             elif QRS and i > QRS[-1]+ms200 and i < QRS[-1]+ms1200:
 
                 M = np.mean(MM)*M_slope[i-(QRS[-1]+ms200)]
@@ -325,7 +328,7 @@ class Detectors:
                 QRS.append(i)
                 thi_list.append(i)
                 thi = True
-            
+
             elif QRS and i > QRS[-1]+ms200 and low_pass[i]>M:
                 QRS.append(i)
                 thi_list.append(i)
@@ -335,21 +338,21 @@ class Detectors:
                 if low_pass[i]<-M and low_pass[i-1]>-M:
                     #thf_list.append(i)
                     thf = True
-                    
+
                 if thf and low_pass[i]<-M:
                     thf_list.append(i)
                     counter += 1
-                
+
                 elif low_pass[i]>-M and thf:
                     counter = 0
                     thi = False
                     thf = False
-            
+
             elif thi and i>thi_list[-1]+ms160:
                     counter = 0
                     thi = False
-                    thf = False                                        
-            
+                    thf = False
+
             if counter>neg_threshold:
                 unfiltered_section = unfiltered_ecg[thi_list[-1]-int(0.01*self.fs):i]
                 r_peaks.append(self.engzee_fake_delay+
@@ -360,7 +363,7 @@ class Detectors:
 
         return r_peaks
 
-    
+
     def matched_filter_detector(self, unfiltered_ecg):
         """
         FIR matched filter using template of QRS complex.
@@ -368,7 +371,7 @@ class Detectors:
         Uses the Pan and Tompkins thresholding method.
         """
         current_dir = pathlib.Path(__file__).resolve()
-        
+
         if self.fs == 250:
             template_dir = current_dir.parent/'templates'/'template_250hz.csv'
             template = np.loadtxt(template_dir)
@@ -392,21 +395,21 @@ class Detectors:
         squared[:len(template)] = 0
 
         squared_peaks = panPeakDetect(squared, self.fs)
-  
+
         return squared_peaks
 
-    
+
     def swt_detector(self, unfiltered_ecg):
         """
-        Stationary Wavelet Transform 
-        based on Vignesh Kalidas and Lakshman Tamil. 
-        Real-time QRS detector using Stationary Wavelet Transform 
-        for Automated ECG Analysis. 
-        In: 2017 IEEE 17th International Conference on 
-        Bioinformatics and Bioengineering (BIBE). 
+        Stationary Wavelet Transform
+        based on Vignesh Kalidas and Lakshman Tamil.
+        Real-time QRS detector using Stationary Wavelet Transform
+        for Automated ECG Analysis.
+        In: 2017 IEEE 17th International Conference on
+        Bioinformatics and Bioengineering (BIBE).
         Uses the Pan and Tompkins thresolding.
         """
-        
+
         swt_level=3
         padding = -1
         for i in range(1000):
@@ -417,7 +420,7 @@ class Detectors:
         if padding > 0:
             unfiltered_ecg = np.pad(unfiltered_ecg, (0, padding), 'edge')
         elif padding == -1:
-            print("Padding greater than 1000 required\n")    
+            print("Padding greater than 1000 required\n")
 
         swt_ecg = pywt.swt(unfiltered_ecg, 'db3', level=swt_level)
         swt_ecg = np.array(swt_ecg)
@@ -429,29 +432,29 @@ class Detectors:
         f2 = 10/self.fs
 
         b, a = signal.butter(3, [f1*2, f2*2], btype='bandpass')
-        filtered_squared = signal.lfilter(b, a, squared)       
+        filtered_squared = signal.lfilter(b, a, squared)
 
         filt_peaks = panPeakDetect(filtered_squared, self.fs)
-        
+
         return filt_peaks
 
 
     def pan_tompkins_detector(self, unfiltered_ecg):
         """
         Jiapu Pan and Willis J. Tompkins.
-        A Real-Time QRS Detection Algorithm. 
-        In: IEEE Transactions on Biomedical Engineering 
+        A Real-Time QRS Detection Algorithm.
+        In: IEEE Transactions on Biomedical Engineering
         BME-32.3 (1985), pp. 230–236.
         """
-        
+
         f1 = 5/self.fs
         f2 = 15/self.fs
 
         b, a = signal.butter(1, [f1*2, f2*2], btype='bandpass')
 
-        filtered_ecg = signal.lfilter(b, a, unfiltered_ecg)        
+        filtered_ecg = signal.lfilter(b, a, unfiltered_ecg)
 
-        diff = np.diff(filtered_ecg) 
+        diff = np.diff(filtered_ecg)
 
         squared = diff*diff
 
@@ -466,13 +469,13 @@ class Detectors:
 
     def two_average_detector(self, unfiltered_ecg):
         """
-        Elgendi, Mohamed & Jonkman, 
+        Elgendi, Mohamed & Jonkman,
         Mirjam & De Boer, Friso. (2010).
         Frequency Bands Effects on QRS Detection.
-        The 3rd International Conference on Bio-inspired Systems 
+        The 3rd International Conference on Bio-inspired Systems
         and Signal Processing (BIOSIGNALS2010). 428-431.
         """
-        
+
         f1 = 8/self.fs
         f2 = 20/self.fs
 
@@ -500,7 +503,7 @@ class Detectors:
         for i in range(1, len(blocks)):
             if blocks[i-1] == 0 and blocks[i] == block_height:
                 start = i
-            
+
             elif blocks[i-1] == block_height and blocks[i] == 0:
                 end = i-1
 
@@ -523,7 +526,7 @@ def MWA(input_array, window_size):
             section = input_array[0:i]
         else:
             section = input_array[i-window_size:i]
-        
+
         if i!=0:
             mwa[i] = np.mean(section)
         else:
@@ -539,7 +542,7 @@ def normalise(input_array):
     return output_array
 
 
-def panPeakDetect(detection, fs):    
+def panPeakDetect(detection, fs):
 
     min_distance = int(0.25*fs)
 
@@ -567,7 +570,7 @@ def panPeakDetect(detection, fs):
                 peaks.append(i)
 
                 if detection[peak]>threshold_I1 and (peak-signal_peaks[-1])>0.3*fs:
-                        
+
                     signal_peaks.append(peak)
                     indexes.append(index)
                     SPKI = 0.125*detection[signal_peaks[-1]] + 0.875*SPKI
@@ -579,11 +582,11 @@ def panPeakDetect(detection, fs):
                                 if missed_peak-signal_peaks[-2]>min_distance and signal_peaks[-1]-missed_peak>min_distance and detection[missed_peak]>threshold_I2:
                                     missed_section_peaks2.append(missed_peak)
 
-                            if len(missed_section_peaks2)>0:           
+                            if len(missed_section_peaks2)>0:
                                 missed_peak = missed_section_peaks2[np.argmax(detection[missed_section_peaks2])]
                                 missed_peaks.append(missed_peak)
                                 signal_peaks.append(signal_peaks[-1])
-                                signal_peaks[-2] = missed_peak   
+                                signal_peaks[-2] = missed_peak
 
                 else:
                     noise_peaks.append(peak)
@@ -597,8 +600,8 @@ def panPeakDetect(detection, fs):
                     RR_ave = int(np.mean(RR))
                     RR_missed = int(1.66*RR_ave)
 
-                index = index+1      
-    
+                index = index+1
+
     signal_peaks.pop(0)
 
     return signal_peaks
