@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import _tester_utils
 import pathlib
-from ecgdetectors import Detectors
+
 
 current_dir = pathlib.Path(__file__).resolve()
 data_dir = str(pathlib.Path(current_dir).parents[1]/'dataset_716'/'experiment_data')
@@ -19,7 +19,7 @@ class GUDB_test:
     You need to download both the GU database from: http://researchdata.gla.ac.uk/716/
     and needs to be placed below this directory: "../dataset_716".
     """
-    
+
     def single_classifier_test(self, detector, tolerance=0, config="chest_strap"):
 
         max_delay_in_samples = 250 / 3
@@ -35,23 +35,23 @@ class GUDB_test:
             results[subject_number, 0] = subject_number
             exp_counter = 1
             for experiment in Ecg.experiments:
-                
+
                 ecg_class = Ecg(data_dir, subject_number, experiment)
 
                 anno_exists = False
                 if config=="chest_strap" and ecg_class.anno_cs_exists:
-                    unfiltered_ecg = ecg_class.cs_V2_V1                   
+                    unfiltered_ecg = ecg_class.cs_V2_V1
                     anno = ecg_class.anno_cs
                     anno_exists = True
                 elif config=="loose_cables" and ecg_class.anno_cables_exists:
-                    unfiltered_ecg = ecg_class.einthoven_II 
+                    unfiltered_ecg = ecg_class.einthoven_II
                     anno = ecg_class.anno_cables
                     anno_exists = True
                 elif config!="chest_strap" and config!="loose_cables":
                     raise RuntimeError("Config argument must be chest_strap or loose_cables!")
                     return results
 
-                if anno_exists:                  
+                if anno_exists:
 
                     r_peaks = detector(unfiltered_ecg)
 
@@ -90,7 +90,7 @@ class GUDB_test:
 
             total_results[:, counter:counter+(4*len(Ecg.experiments))] = result
 
-            counter = counter+(4*len(Ecg.experiments))        
+            counter = counter+(4*len(Ecg.experiments))
 
         index_labels = np.arange(Ecg.total_subjects)
         col_labels = []
@@ -101,7 +101,7 @@ class GUDB_test:
                     label = det_name+" "+experiment_name+" "+output_name
                     col_labels.append(label)
 
-        total_results_pd = pd.DataFrame(total_results, index_labels, col_labels, dtype=int)            
+        total_results_pd = pd.DataFrame(total_results, index_labels, col_labels, dtype=int)
         total_results_pd.to_csv('results_GUDB_'+config+'.csv', sep=',')
 
         return total_results_pd
