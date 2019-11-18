@@ -14,7 +14,6 @@ try:
 except ImportError:
     import pathlib2 as pathlib
 import scipy.signal as signal
-from biosppy import ecg
 
 
 class Detectors:
