@@ -4,7 +4,6 @@ import _tester_utils
 import wfdb
 import pathlib
 import os
-from ecgdetectors import Detectors
 
 
 class MITDB_test:
@@ -23,9 +22,9 @@ class MITDB_test:
         for file in os.listdir(self.mitdb_dir):
             if file.endswith(".dat"):
                 dat_files.append(file)
-        
+
         mit_records = [w.replace(".dat", "") for w in dat_files]
-        
+
         results = np.zeros((len(mit_records), 5), dtype=int)
 
         i = 0
@@ -34,10 +33,10 @@ class MITDB_test:
             print("MITDB progress: %i%%" % progress)
 
             sig, fields = wfdb.rdsamp(self.mitdb_dir+'/'+record)
-            unfiltered_ecg = sig[:, 0]  
+            unfiltered_ecg = sig[:, 0]
 
-            ann = wfdb.rdann(str(self.mitdb_dir+'/'+record), 'atr')    
-            anno = _tester_utils.sort_MIT_annotations(ann)    
+            ann = wfdb.rdann(str(self.mitdb_dir+'/'+record), 'atr')
+            anno = _tester_utils.sort_MIT_annotations(ann)
 
             r_peaks = detector(unfiltered_ecg)
 
@@ -47,15 +46,15 @@ class MITDB_test:
 
                 TP, FP, FN = _tester_utils.evaluate_detector(r_peaks, anno, delay, tol=tolerance)
                 TN = len(unfiltered_ecg)-(TP+FP+FN)
-                
-                results[i, 0] = int(record)    
+
+                results[i, 0] = int(record)
                 results[i, 1] = TP
                 results[i, 2] = FP
                 results[i, 3] = FN
                 results[i, 4] = TN
 
             i = i+1
-        
+
         return results
 
 
@@ -81,7 +80,7 @@ class MITDB_test:
 
             total_results[:, counter:counter+4] = result
 
-            counter = counter+4  
+            counter = counter+4
 
         col_labels = []
 
@@ -90,7 +89,7 @@ class MITDB_test:
                     label = det_name+" "+output_name
                     col_labels.append(label)
 
-        total_results_pd = pd.DataFrame(total_results, index_labels, col_labels, dtype=int)            
+        total_results_pd = pd.DataFrame(total_results, index_labels, col_labels, dtype=int)
         total_results_pd.to_csv('results_MITDB'+'.csv', sep=',')
 
         return total_results_pd

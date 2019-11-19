@@ -8,7 +8,6 @@ Both need to be placed below this directory: "../mit-bih-arrhythmia-database-1.0
 and "../dataset_716" for the GU database.
 """
 import numpy as np
-import pathlib
 from tester_MITDB import MITDB_test
 from tester_GUDB import GUDB_test
 from ecgdetectors import Detectors
@@ -30,7 +29,7 @@ def run_MIT_tests():
     # MIT-BIH database testing
     mit_test = MITDB_test()
     mit_detectors = Detectors(360)
-    
+
     # test single detector
     matched_filter_mit = mit_test.single_classifier_test(mit_detectors.matched_filter_detector, tolerance=0)
     np.savetxt('matched_filter_mit.csv', matched_filter_mit, fmt='%i', delimiter=',')
