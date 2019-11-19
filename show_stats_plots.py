@@ -18,16 +18,12 @@ def str_join(a, b, c):
 def get_sensivities(results_df, detector_name, experiment=None):
     if experiment is not None:
         tp_col_names = str_join(detector_name + ' ', [experiment], ' TP')
-        fp_col_names = str_join(detector_name + ' ', [experiment], ' FP')
         fn_col_names = str_join(detector_name + ' ', [experiment], ' FN')
-        tn_col_names = str_join(detector_name + ' ', [experiment], ' TN')
         total_tp = (results_df.loc[:, tp_col_names].values)[:, 0]
         total_fn = (results_df.loc[:, fn_col_names].values)[:, 0]
     else:
         tp_col_names = detector_name + ' ' + 'TP'
-        fp_col_names = detector_name + ' ' + 'FP'
         fn_col_names = detector_name + ' ' + 'FN'
-        tn_col_names = detector_name + ' ' + 'TN'
         total_tp = results_df.loc[:, tp_col_names].values
         total_fn = results_df.loc[:, fn_col_names].values
 

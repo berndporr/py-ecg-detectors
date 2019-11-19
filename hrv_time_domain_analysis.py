@@ -22,9 +22,9 @@ from ecg_gla_database import Ecg
 
 path_gu_ecg_database = '../dataset_716'
 
-sys.path.insert(0, path_gu_ecg_database + r'/example_code')
+sys.path.insert(0, path_gu_ecg_database + '/example_code')
 
-data_path = path_gu_ecg_database + r'/experiment_data'
+data_path = path_gu_ecg_database + '/experiment_data'
 
 maths_rr_sd = []
 maths_error_rr_sd = []
