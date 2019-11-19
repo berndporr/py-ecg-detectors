@@ -14,7 +14,7 @@ setup(
     py_modules=['ecgdetectors', 'hrv'],
     include_package_data=True,
     install_requires=['numpy', 'scipy', 'pathlib2;python_version<"3.4"',
-                      'biosppy', 'gatspy', 'pywavelets'],
+                      'gatspy', 'pywavelets'],
     zip_safe=False,
     url='https://github.com/berndporr/py-ecg-qrs-detectors',
     license='GPL 3.0',
