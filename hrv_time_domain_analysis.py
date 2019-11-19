@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 # Performs heartrate variation timedomain analysis
 #
 # It calculates the normalised RMSSD during sitting
@@ -11,20 +10,19 @@
 #
 # Via the commandline argument one can choose
 # Einthoven II or the ECG from the Chest strap
-#
 
+import sys
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.stats as stats
 from hrv import HRV
 from ecgdetectors import Detectors
+from ecg_gla_database import Ecg
+
 
 path_gu_ecg_database = '../dataset_716'
 
-import sys
 sys.path.insert(0, path_gu_ecg_database + r'/example_code')
-from ecg_gla_database import Ecg
-
 
 data_path = path_gu_ecg_database + r'/experiment_data'
 
@@ -44,7 +42,6 @@ if len(sys.argv) < 2:
     exit(1)
 
 for i in range(total_subjects):
-#for i in range(2):
     print(i)
     sitting_class = Ecg(data_path, i, 'sitting')
     sitting_class.filter_data()
@@ -65,25 +62,26 @@ for i in range(total_subjects):
             ecg_channel_sitting = sitting_class.cs_V2_V1
             ecg_channel_maths = maths_class.cs_V2_V1
         else:
-            print("Bad argument. Specify 'e' for Einthoven or 'v' for the Chest strap.")
+            print("Bad argument. Specify 'e' for Einthoven or 'v' for the "
+                  "Chest strap.")
             exit(1)
 
         r_peaks = detectors.swt_detector(ecg_channel_sitting)
-        sitting_rr_sd.append(hrv_class.RMSSD(r_peaks,True))
+        sitting_rr_sd.append(hrv_class.RMSSD(r_peaks, True))
         r_peaks = detectors.swt_detector(ecg_channel_maths)
-        maths_rr_sd.append(hrv_class.RMSSD(r_peaks,True))
+        maths_rr_sd.append(hrv_class.RMSSD(r_peaks, True))
 
         sitting_error_rr = detectors.engzee_detector(ecg_channel_sitting)
-        sitting_error_rr_sd.append(hrv_class.RMSSD(sitting_error_rr,True))
+        sitting_error_rr_sd.append(hrv_class.RMSSD(sitting_error_rr, True))
 
         maths_error_rr = detectors.engzee_detector(ecg_channel_maths)
-        maths_error_rr_sd.append(hrv_class.RMSSD(maths_error_rr,True))
+        maths_error_rr_sd.append(hrv_class.RMSSD(maths_error_rr, True))
 
         maths_true_rr = maths_class.anno_cs
-        maths_true_sd.append(hrv_class.RMSSD(maths_true_rr,True))
-        
+        maths_true_sd.append(hrv_class.RMSSD(maths_true_rr, True))
+
         sitting_true_rr = sitting_class.anno_cs
-        sitting_true_sd.append(hrv_class.RMSSD(sitting_true_rr,True))
+        sitting_true_sd.append(hrv_class.RMSSD(sitting_true_rr, True))
 
 
 subject = np.array(subject)
@@ -95,11 +93,11 @@ rects2 = ax.bar(subject+(1*width), maths_true_sd, width)
 
 ax.set_ylabel('SDNN (s)')
 ax.set_xlabel('Subject')
-ax.set_ylim([0,0.1])
+ax.set_ylim([0, 0.1])
 ax.set_title('HRV for sitting and maths test')
 ax.set_xticks(subject + width)
 ax.set_xticklabels(subject)
-ax.legend((rects1[0], rects2[0]), ('sitting', 'maths' ))
+ax.legend((rects1[0], rects2[0]), ('sitting', 'maths'))
 
 plt.figure()
 
@@ -113,8 +111,10 @@ sd_sitting_rr_sd = np.std(sitting_rr_sd)
 avg_maths_rr_sd = np.average(maths_rr_sd)
 sd_maths_rr_sd = np.std(maths_rr_sd)
 
-plt.bar(['sitting','maths'],[avg_sitting_rr_sd,avg_maths_rr_sd],yerr=[sd_sitting_rr_sd,sd_maths_rr_sd],align='center', alpha=0.5, ecolor='black', capsize=10)
-plt.ylim([0,ymax])
+plt.bar(['sitting', 'maths'], [avg_sitting_rr_sd, avg_maths_rr_sd],
+        yerr=[sd_sitting_rr_sd, sd_maths_rr_sd], align='center', alpha=0.5,
+        ecolor='black', capsize=10)
+plt.ylim([0, ymax])
 plt.title("WAVELET: Sitting vs Maths")
 plt.ylabel('nRMSSD')
 
@@ -134,37 +134,41 @@ sd_maths_true_sd = np.std(maths_true_sd)
 
 plt.figure()
 
-plt.bar(['sitting','maths'],[avg_sitting_error_rr_sd,avg_maths_error_rr_sd],yerr=[sd_sitting_error_rr_sd,sd_maths_error_rr_sd],align='center', alpha=0.5, ecolor='black', capsize=10)
-plt.ylim([0,ymax])
+plt.bar(['sitting', 'maths'], [avg_sitting_error_rr_sd, avg_maths_error_rr_sd],
+        yerr=[sd_sitting_error_rr_sd, sd_maths_error_rr_sd], align='center',
+        alpha=0.5, ecolor='black', capsize=10)
+plt.ylim([0, ymax])
 plt.title("Engzee DETECTOR: Sitting vs Maths")
 plt.ylabel('nRMSSD')
 
 plt.figure()
 
-plt.bar(['sitting','maths'],[avg_sitting_true_sd,avg_maths_true_sd],yerr=[sd_sitting_true_sd,sd_maths_true_sd],align='center', alpha=0.5, ecolor='black', capsize=10)
-plt.ylim([0,ymax])
+plt.bar(['sitting', 'maths'], [avg_sitting_true_sd, avg_maths_true_sd],
+        yerr=[sd_sitting_true_sd, sd_maths_true_sd], align='center', alpha=0.5,
+        ecolor='black', capsize=10)
+plt.ylim([0, ymax])
 plt.title("GROUND TRUTH: Sitting vs Maths")
 plt.ylabel('nRMSSD')
 
-t,p = stats.wilcoxon(sitting_true_sd,maths_true_sd)
-print("GROUND TRUTH (sitting vs maths): p=",p)
+t, p = stats.wilcoxon(sitting_true_sd, maths_true_sd)
+print("GROUND TRUTH (sitting vs maths): p=", p)
 
-t,p = stats.wilcoxon(sitting_rr_sd,maths_rr_sd)
-print("WAVELET (sitting vs maths): p=",p)
+t, p = stats.wilcoxon(sitting_rr_sd, maths_rr_sd)
+print("WAVELET (sitting vs maths): p=", p)
 
-t,p = stats.wilcoxon(sitting_error_rr_sd,maths_error_rr_sd)
-print("EngZee DETECTOR: (sitting vs maths): p=",p)
+t, p = stats.wilcoxon(sitting_error_rr_sd, maths_error_rr_sd)
+print("EngZee DETECTOR: (sitting vs maths): p=", p)
 
-t,p = stats.wilcoxon(sitting_true_sd,sitting_rr_sd)
-print("Sitting: Wavelet vs ground truth, p=",p)
+t, p = stats.wilcoxon(sitting_true_sd, sitting_rr_sd)
+print("Sitting: Wavelet vs ground truth, p=", p)
 
-t,p = stats.wilcoxon(sitting_true_sd,sitting_error_rr_sd)
-print("Sitting: EngZee vs ground truth, p=",p)
+t, p = stats.wilcoxon(sitting_true_sd, sitting_error_rr_sd)
+print("Sitting: EngZee vs ground truth, p=", p)
 
-t,p = stats.wilcoxon(maths_true_sd,maths_rr_sd)
-print("Maths: Wavelet vs ground truth, p=",p)
+t, p = stats.wilcoxon(maths_true_sd, maths_rr_sd)
+print("Maths: Wavelet vs ground truth, p=", p)
 
-t,p = stats.wilcoxon(maths_true_sd,maths_error_rr_sd)
-print("Maths: EngZee vs ground truth, p=",p)
+t, p = stats.wilcoxon(maths_true_sd, maths_error_rr_sd)
+print("Maths: EngZee vs ground truth, p=", p)
 
 plt.show()
