@@ -5,7 +5,7 @@ with open('README.rst') as f:
 
 setup(
     name='py-ecg-detectors',
-    version='0.9.6',
+    version='0.9.9',
     description=("Seven ECG heartbeat detection algorithms and heartrate "
                  "variability analysis"),
     long_description=long_description,
