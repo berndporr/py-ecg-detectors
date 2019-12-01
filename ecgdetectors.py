@@ -9,9 +9,11 @@ GPL GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
 
 import numpy as np
 import pywt
-import pathlib
+try:
+    import pathlib
+except ImportError:
+    import pathlib2 as pathlib
 import scipy.signal as signal
-from biosppy import ecg
 
 
 class Detectors:
