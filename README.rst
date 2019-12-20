@@ -91,7 +91,9 @@ Usage::
 Matched Filter
 --------------
 
-FIR matched filter using template of QRS complex. Uses the Pan and Tompkins thresolding method. Usage::
+FIR matched filter using template of QRS complex. Uses the Pan and Tompkins thresolding method.
+The ECG template is a text file where the samples are in a single column. See
+the templates folder on github for examples. Usage::
 
   r_peaks = detectors.matched_filter_detector(unfiltered_ecg,template_file)
 
