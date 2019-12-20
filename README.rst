@@ -91,9 +91,9 @@ Usage::
 Matched Filter
 --------------
 
-FIR matched filter using template of QRS complex. Template provided for 250Hz and 360Hz. Uses the Pan and Tompkins thresolding method. Usage::
+FIR matched filter using template of QRS complex. Uses the Pan and Tompkins thresolding method. Usage::
 
-  r_peaks = detectors.matched_filter_detector(unfiltered_ecg)
+  r_peaks = detectors.matched_filter_detector(unfiltered_ecg,template_file)
 
 
 Heartrate variability analysis
