@@ -13,7 +13,6 @@ setup(
     author='Luis Howell, Bernd Porr',
     author_email='luisbhowell@gmail.com, bernd.porr@glasgow.ac.uk',
     py_modules=['ecgdetectors','hrv'],
-    include_package_data=True,
     install_requires=['numpy',
                       'pathlib2;python_version<"3.4"',
                       'scipy',
