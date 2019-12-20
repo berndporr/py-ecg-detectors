@@ -363,22 +363,27 @@ class Detectors:
         return r_peaks
 
     
-    def matched_filter_detector(self, unfiltered_ecg):
+    def matched_filter_detector(self, unfiltered_ecg, template_file = ""):
         """
         FIR matched filter using template of QRS complex.
-        Template provided for 250Hz and 360Hz.
+        Template provided for 250Hz and 360Hz. Optionally provide your
+        own template file where every line has one sample.
         Uses the Pan and Tompkins thresholding method.
         """
         current_dir = pathlib.Path(__file__).resolve()
-        
-        if self.fs == 250:
-            template_dir = current_dir.parent/'templates'/'template_250hz.csv'
-            template = np.loadtxt(template_dir)
-        elif self.fs == 360:
-            template_dir = current_dir.parent/'templates'/'template_360hz.csv'
-            template = np.loadtxt(template_dir)
+
+        if len(template_file) > 1:
+            template = np.loadtxt(template_file)
         else:
-            print('\n!!No template for this frequency!!\n')
+            if self.fs == 250:
+                template_dir = current_dir.parent/'templates'/'template_250hz.csv'
+                template = np.loadtxt(template_dir)
+            elif self.fs == 360:
+                template_dir = current_dir.parent/'templates'/'template_360hz.csv'
+                template = np.loadtxt(template_dir)
+            else:
+                print('\n!!No template for this frequency!!\n')
+                return False
 
         f0 = 0.1/self.fs
         f1 = 48/self.fs
