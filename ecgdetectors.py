@@ -443,7 +443,7 @@ class Detectors:
         return filt_peaks
 
 
-    def pan_tompkins_detector(self, unfiltered_ecg):
+    def pan_tompkins_detector(self, unfiltered_ecg, MWA_name='cumulative'):
         """
         Jiapu Pan and Willis J. Tompkins.
         A Real-Time QRS Detection Algorithm. 
@@ -463,7 +463,7 @@ class Detectors:
         squared = diff*diff
 
         N = int(0.12*self.fs)
-        mwa = MWA(squared, N)
+        mwa = MWA_from_name(MWA_name)(squared, N)
         mwa[:int(0.2*self.fs)] = 0
 
         mwa_peaks = panPeakDetect(mwa, self.fs)
@@ -471,7 +471,7 @@ class Detectors:
         return mwa_peaks
 
 
-    def two_average_detector(self, unfiltered_ecg):
+    def two_average_detector(self, unfiltered_ecg, MWA_name='cumulative'):
         """
         Elgendi, Mohamed & Jonkman, 
         Mirjam & De Boer, Friso. (2010).
@@ -488,10 +488,10 @@ class Detectors:
         filtered_ecg = signal.lfilter(b, a, unfiltered_ecg)
 
         window1 = int(0.12*self.fs)
-        mwa_qrs = MWA(abs(filtered_ecg), window1)
+        mwa_qrs = MWA_from_name(MWA_name)(abs(filtered_ecg), window1)
 
         window2 = int(0.6*self.fs)
-        mwa_beat = MWA(abs(filtered_ecg), window2)
+        mwa_beat = MWA_from_name(MWA_name)(abs(filtered_ecg), window2)
 
         blocks = np.zeros(len(unfiltered_ecg))
         block_height = np.max(filtered_ecg)
@@ -521,8 +521,18 @@ class Detectors:
 
         return QRS
 
+def MWA_from_name(function_name):
+    if function_name == "cumulative":
+        return MWA_cumulative
+    elif function_name == "convolve":
+        return MWA_convolve
+    elif function_name == "original":
+        return MWA_original
+    else: 
+        raise RuntimeError('invalid moving average function!')
+
 #Fast implementation of moving window average with numpy's cumsum function 
-def MWA(input_array, window_size):
+def MWA_cumulative(input_array, window_size):
     
     ret = np.cumsum(input_array, dtype=float)
     ret[window_size:] = ret[window_size:] - ret[:-window_size]
