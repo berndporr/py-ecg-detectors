@@ -521,22 +521,45 @@ class Detectors:
 
         return QRS
 
-
+#Fast implementation of moving window average with numpy's cumsum function 
 def MWA(input_array, window_size):
+    
+    ret = np.cumsum(input_array, dtype=float)
+    ret[window_size:] = ret[window_size:] - ret[:-window_size]
+    
+    for i in range(1,window_size):
+        ret[i-1] = ret[i-1] / i
+    ret[window_size - 1:]  = ret[window_size - 1:] / window_size
+    
+    return ret
+
+#Original Function 
+def MWA_original(input_array, window_size):
 
     mwa = np.zeros(len(input_array))
-    for i in range(len(input_array)):
+    mwa[0] = input_array[0]
+    
+    for i in range(2,len(input_array)+1):
         if i < window_size:
             section = input_array[0:i]
         else:
-            section = input_array[i-window_size:i]
+            section = input_array[i-window_size:i]        
         
-        if i!=0:
-            mwa[i] = np.mean(section)
-        else:
-            mwa[i] = input_array[i]
+        mwa[i-1] = np.mean(section)
 
     return mwa
+
+#Fast moving window average implemented with 1D convolution 
+def MWA_convolve(input_array, window_size):
+    
+    ret = np.pad(input_array, (window_size-1,0), 'constant', constant_values=(0,0))
+    ret = np.convolve(ret,np.ones(window_size),'valid')
+    
+    for i in range(1,window_size):
+        ret[i-1] = ret[i-1] / i
+    ret[window_size-1:] = ret[window_size-1:] / window_size
+    
+    return ret
 
 
 def normalise(input_array):
