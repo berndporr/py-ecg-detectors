@@ -443,7 +443,7 @@ class Detectors:
         return filt_peaks
 
 
-    def pan_tompkins_detector(self, unfiltered_ecg):
+    def pan_tompkins_detector(self, unfiltered_ecg, MWA_name='cumulative'):
         """
         Jiapu Pan and Willis J. Tompkins.
         A Real-Time QRS Detection Algorithm. 
@@ -463,7 +463,7 @@ class Detectors:
         squared = diff*diff
 
         N = int(0.12*self.fs)
-        mwa = MWA(squared, N)
+        mwa = MWA_from_name(MWA_name)(squared, N)
         mwa[:int(0.2*self.fs)] = 0
 
         mwa_peaks = panPeakDetect(mwa, self.fs)
@@ -471,7 +471,7 @@ class Detectors:
         return mwa_peaks
 
 
-    def two_average_detector(self, unfiltered_ecg):
+    def two_average_detector(self, unfiltered_ecg, MWA_name='cumulative'):
         """
         Elgendi, Mohamed & Jonkman, 
         Mirjam & De Boer, Friso. (2010).
@@ -488,10 +488,10 @@ class Detectors:
         filtered_ecg = signal.lfilter(b, a, unfiltered_ecg)
 
         window1 = int(0.12*self.fs)
-        mwa_qrs = MWA(abs(filtered_ecg), window1)
+        mwa_qrs = MWA_from_name(MWA_name)(abs(filtered_ecg), window1)
 
         window2 = int(0.6*self.fs)
-        mwa_beat = MWA(abs(filtered_ecg), window2)
+        mwa_beat = MWA_from_name(MWA_name)(abs(filtered_ecg), window2)
 
         blocks = np.zeros(len(unfiltered_ecg))
         block_height = np.max(filtered_ecg)
@@ -521,22 +521,55 @@ class Detectors:
 
         return QRS
 
+def MWA_from_name(function_name):
+    if function_name == "cumulative":
+        return MWA_cumulative
+    elif function_name == "convolve":
+        return MWA_convolve
+    elif function_name == "original":
+        return MWA_original
+    else: 
+        raise RuntimeError('invalid moving average function!')
 
-def MWA(input_array, window_size):
+#Fast implementation of moving window average with numpy's cumsum function 
+def MWA_cumulative(input_array, window_size):
+    
+    ret = np.cumsum(input_array, dtype=float)
+    ret[window_size:] = ret[window_size:] - ret[:-window_size]
+    
+    for i in range(1,window_size):
+        ret[i-1] = ret[i-1] / i
+    ret[window_size - 1:]  = ret[window_size - 1:] / window_size
+    
+    return ret
+
+#Original Function 
+def MWA_original(input_array, window_size):
 
     mwa = np.zeros(len(input_array))
-    for i in range(len(input_array)):
+    mwa[0] = input_array[0]
+    
+    for i in range(2,len(input_array)+1):
         if i < window_size:
             section = input_array[0:i]
         else:
-            section = input_array[i-window_size:i]
+            section = input_array[i-window_size:i]        
         
-        if i!=0:
-            mwa[i] = np.mean(section)
-        else:
-            mwa[i] = input_array[i]
+        mwa[i-1] = np.mean(section)
 
     return mwa
+
+#Fast moving window average implemented with 1D convolution 
+def MWA_convolve(input_array, window_size):
+    
+    ret = np.pad(input_array, (window_size-1,0), 'constant', constant_values=(0,0))
+    ret = np.convolve(ret,np.ones(window_size),'valid')
+    
+    for i in range(1,window_size):
+        ret[i-1] = ret[i-1] / i
+    ret[window_size-1:] = ret[window_size-1:] / window_size
+    
+    return ret
 
 
 def normalise(input_array):
