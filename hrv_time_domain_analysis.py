@@ -12,21 +12,19 @@
 # Via the commandline argument one can choose
 # Einthoven II or the ECG from the Chest strap
 #
+#
+# Install https://github.com/berndporr/ECG-GUDB
+# via pip.
+#
 
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.stats as stats
+import sys
 from hrv import HRV
 from ecgdetectors import Detectors
 
-path_gu_ecg_database = '../dataset_716'
-
-import sys
-sys.path.insert(0, path_gu_ecg_database + r'/example_code')
-from ecg_gla_database import Ecg
-
-
-data_path = path_gu_ecg_database + r'/experiment_data'
+from ecg_gudb_database import GUDb
 
 maths_rr_sd = []
 maths_error_rr_sd = []
@@ -46,9 +44,9 @@ if len(sys.argv) < 2:
 for i in range(total_subjects):
 #for i in range(2):
     print(i)
-    sitting_class = Ecg(data_path, i, 'sitting')
+    sitting_class = GUDb(i, 'sitting')
     sitting_class.filter_data()
-    maths_class = Ecg(data_path, i, 'maths')
+    maths_class = GUDb(i, 'maths')
     maths_class.filter_data()
 
     detectors = Detectors(sitting_class.fs)

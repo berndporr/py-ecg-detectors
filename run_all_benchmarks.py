@@ -3,9 +3,8 @@
 This script benchmarks all detectors with both the MIT database and the GU database.
 For the GU database it runs it for both the chest strap and Einthoven II with loose cables.
 You need to download both the MIT arrhythmia database from: https://alpha.physionet.org/content/mitdb/1.0.0/
-and the GU database from: http://researchdata.gla.ac.uk/716/
-Both need to be placed below this directory: "../mit-bih-arrhythmia-database-1.0.0/" for the MITDB and
-and "../dataset_716" for the GU database.
+and install the GUDB API https://github.com/berndporr/ECG-GUDB
+The MIT database needs to be placed below this directory: "../mit-bih-arrhythmia-database-1.0.0/".
 """
 import numpy as np
 import pathlib

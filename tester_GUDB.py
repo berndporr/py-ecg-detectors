@@ -1,32 +1,23 @@
 import numpy as np
 import pandas as pd
 import _tester_utils
-import pathlib
+
 from ecgdetectors import Detectors
-
-current_dir = pathlib.Path(__file__).resolve()
-data_dir = str(pathlib.Path(current_dir).parents[1]/'dataset_716'/'experiment_data')
-code_dir = str(pathlib.Path(current_dir).parents[1]/'dataset_716'/'example_code')
-
-import sys
-sys.path.insert(0, code_dir)
-from ecg_gla_database import Ecg
-
+from ecg_gudb_database import GUDb
 
 class GUDB_test:
     """
     This class benchmarks detectors against the GU database.
-    You need to download both the GU database from: http://researchdata.gla.ac.uk/716/
-    and needs to be placed below this directory: "../dataset_716".
+    You need to install the API for the GUDB: https://github.com/berndporr/ECG-GUDB
     """
     
     def single_classifier_test(self, detector, tolerance=0, config="chest_strap"):
 
         max_delay_in_samples = 250 / 3
 
-        total_subjects = Ecg.total_subjects
+        total_subjects = GUDb.total_subjects
 
-        results = np.zeros((total_subjects, (4*len(Ecg.experiments))+1), dtype=int)
+        results = np.zeros((total_subjects, (4*len(GUDb.experiments))+1), dtype=int)
 
         for subject_number in range(0, total_subjects):
             progress = int(subject_number/float(total_subjects)*100.0)
@@ -34,9 +25,9 @@ class GUDB_test:
 
             results[subject_number, 0] = subject_number
             exp_counter = 1
-            for experiment in Ecg.experiments:
+            for experiment in GUDb.experiments:
                 
-                ecg_class = Ecg(data_dir, subject_number, experiment)
+                ecg_class = GUDb(subject_number, experiment)
 
                 anno_exists = False
                 if config=="chest_strap" and ecg_class.anno_cs_exists:
@@ -78,7 +69,7 @@ class GUDB_test:
 
         output_names = ['TP', 'FP', 'FN', 'TN']
 
-        total_results = np.zeros((Ecg.total_subjects, 4*len(Ecg.experiments)*len(_tester_utils.det_names)), dtype=int)
+        total_results = np.zeros((GUDb.total_subjects, 4*len(GUDb.experiments)*len(_tester_utils.det_names)), dtype=int)
 
         counter = 0
         for det_name in _tester_utils.det_names:
@@ -88,15 +79,15 @@ class GUDB_test:
             result = self.single_classifier_test(_tester_utils.det_from_name(det_name, 250), tolerance=tolerance, config=config)
             result = result[:, 1:]
 
-            total_results[:, counter:counter+(4*len(Ecg.experiments))] = result
+            total_results[:, counter:counter+(4*len(GUDb.experiments))] = result
 
-            counter = counter+(4*len(Ecg.experiments))        
+            counter = counter+(4*len(GUDb.experiments))        
 
-        index_labels = np.arange(Ecg.total_subjects)
+        index_labels = np.arange(GUDb.total_subjects)
         col_labels = []
 
         for det_name in _tester_utils.det_names:
-            for experiment_name in Ecg.experiments:
+            for experiment_name in GUDb.experiments:
                 for output_name in output_names:
                     label = det_name+" "+experiment_name+" "+output_name
                     col_labels.append(label)
