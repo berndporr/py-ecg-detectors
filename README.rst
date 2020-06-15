@@ -164,6 +164,20 @@ between sitting and a math test using the EngZee detector and
 the wavelet detector for comparison.
 
 
+Realtime / Causal processing
+============================
+Most ECG R-peak detectors don't detect the actual R-peak so the name
+"R-peak detector" is a misnomer. However in practise this won't play
+any role as only the temporal differences between R-peaks play a role.
+Most detectors work with a threshold which moves the detection forward in time
+and use causal filters which delays the detection. Only a
+few detectors do actually a maximum detection but even that will be
+most likely delayed as the ECG will be always filtered by a causal
+filter. In other words most
+detectors cause a delay between the R peak and its detection. That delay
+should of course be constant so that the resulting HR and HRV is correct.
+
+
 Authors
 =======
 
