@@ -289,6 +289,7 @@ class Detectors:
         thi = False
         thf_list = []
         thf = False
+        newM5 = False
 
         for i in range(len(low_pass)):
 
@@ -306,7 +307,7 @@ class Detectors:
                 if newM5>1.5*MM[-1]:
                     newM5 = 1.1*MM[-1]
 
-            elif QRS and i == QRS[-1]+ms200:
+            elif newM5 and QRS and i == QRS[-1]+ms200:
                 MM.append(newM5)
                 if len(MM)>5:
                     MM.pop(0)    
@@ -360,6 +361,8 @@ class Detectors:
                 thi = False
                 thf = False
 
+        # removing the 1st detection as it 1st needs the QRS complex amplitude for the threshold
+        r_peaks.pop(0)
         return r_peaks
 
     
