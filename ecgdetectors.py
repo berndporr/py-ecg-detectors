@@ -524,6 +524,46 @@ class Detectors:
 
         return QRS
 
+    def wqrs_detector(self, unfiltered_ecg):
+        """
+        based on W Zong, GB Moody, D Jiang 
+        A Robust Open-source Algorithm to Detect Onset and Duration of QRS
+        Complexes 
+        In: 2003 IEEE
+        """
+        def butter_lowpass_filter(data, cutoff):
+            nyq = 0.5 * self.fs
+            order = 2
+
+            normal_cutoff = cutoff / nyq
+            
+            b, a = signal.butter(order, normal_cutoff, btype='low', analog=False)
+            y = signal.lfilter(b, a, data)
+            return y
+
+        def length_transfrom(x, w):
+            tmp = []
+            for i in range(w, len(x)):
+                curr = 0
+                for k in range(i-w+1, i):
+                    curr += np.sqrt(np.power(1/self.fs, 2)+np.power(x[i]-x[i-1],2))
+                tmp.append(curr)
+            l = [tmp[0]]*w
+            
+            return l+tmp
+        
+        def threshold(x):
+            peaks = []
+            u = MWA_convolve(x, 10*self.fs)
+            for i in range(len(x)):
+                if (len(peaks) == 0 or i > peaks[-1]+(self.fs*0.35)) and x[i] > u[i]:
+                    peaks.append(i)
+            return peaks
+        
+        y = butter_lowpass_filter(unfiltered_ecg, 15)
+        y = length_transfrom(y, int(np.ceil(self.fs*0.13)))
+        return threshold(y)
+
 def MWA_from_name(function_name):
     if function_name == "cumulative":
         return MWA_cumulative
