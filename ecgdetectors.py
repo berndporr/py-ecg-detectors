@@ -538,7 +538,7 @@ class Detectors:
             normal_cutoff = cutoff / nyq
             
             b, a = signal.butter(order, normal_cutoff, btype='low', analog=False)
-            y = signal.filtfilt(b, a, data)
+            y = signal.lfilter(b, a, data)
             return y
 
         def length_transfrom(x, w):
