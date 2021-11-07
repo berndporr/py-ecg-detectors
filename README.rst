@@ -100,7 +100,7 @@ the templates folder on github for examples. Usage::
 WQRS
 --------------
 
-Uses the wqrs detector by Zong, GB Moody, D Jiang.
+Uses the wqrs detector by Zong, GB Moody, D Jiang. Usage::
 
   r_peaks = detectors.wqrs_detector(unfiltered_ecg,template_file)
 
