@@ -97,6 +97,13 @@ the templates folder on github for examples. Usage::
 
   r_peaks = detectors.matched_filter_detector(unfiltered_ecg,template_file)
 
+WQRS
+--------------
+
+Uses the wqrs detector by Zong, GB Moody, D Jiang.
+
+  r_peaks = detectors.wqrs_detector(unfiltered_ecg,template_file)
+
 
 Heartrate variability analysis
 ==============================
