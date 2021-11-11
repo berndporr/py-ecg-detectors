@@ -1,0 +1,152 @@
+\hypertarget{classecgdetectors_1_1Detectors}{}\doxysection{ecgdetectors.\+Detectors Class Reference}
+\label{classecgdetectors_1_1Detectors}\index{ecgdetectors.Detectors@{ecgdetectors.Detectors}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{classecgdetectors_1_1Detectors_a35f3abf129faa91e9f1bab29e4f3bb63}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, sampling\+\_\+frequency)
+\item 
+def \mbox{\hyperlink{classecgdetectors_1_1Detectors_abc638b1583805c449fad32b9b025138c}{hamilton\+\_\+detector}} (self, unfiltered\+\_\+ecg)
+\item 
+def \mbox{\hyperlink{classecgdetectors_1_1Detectors_ae8ce358a4000bfcb122a161e05d32626}{christov\+\_\+detector}} (self, unfiltered\+\_\+ecg)
+\item 
+def \mbox{\hyperlink{classecgdetectors_1_1Detectors_afbfec39f8caf15d11ac6b2e119efaa3c}{engzee\+\_\+detector}} (self, unfiltered\+\_\+ecg)
+\item 
+def \mbox{\hyperlink{classecgdetectors_1_1Detectors_aa6cc04acb341991ff92191c34dda7182}{matched\+\_\+filter\+\_\+detector}} (self, unfiltered\+\_\+ecg, template\+\_\+file=\char`\"{}\char`\"{})
+\item 
+def \mbox{\hyperlink{classecgdetectors_1_1Detectors_a9cd3e2ac068417bfec07301807e99d6b}{swt\+\_\+detector}} (self, unfiltered\+\_\+ecg)
+\item 
+def \mbox{\hyperlink{classecgdetectors_1_1Detectors_af9673d7fd4ec31df4270046d34d10faa}{pan\+\_\+tompkins\+\_\+detector}} (self, unfiltered\+\_\+ecg, M\+W\+A\+\_\+name=\textquotesingle{}cumulative\textquotesingle{})
+\item 
+def \mbox{\hyperlink{classecgdetectors_1_1Detectors_ad4fc67c40c78d0049d62fbcf19b2ea7f}{two\+\_\+average\+\_\+detector}} (self, unfiltered\+\_\+ecg, M\+W\+A\+\_\+name=\textquotesingle{}cumulative\textquotesingle{})
+\item 
+def \mbox{\hyperlink{classecgdetectors_1_1Detectors_a62fd2fbdd5762bcb086a77b1be6fd2fa}{wqrs\+\_\+detector}} (self, unfiltered\+\_\+ecg)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classecgdetectors_1_1Detectors_ae8b52f9bda034423918edaed6e941da0}\label{classecgdetectors_1_1Detectors_ae8b52f9bda034423918edaed6e941da0}} 
+{\bfseries fs}
+\item 
+\mbox{\Hypertarget{classecgdetectors_1_1Detectors_a4d823d288d403d377323281658a1aefe}\label{classecgdetectors_1_1Detectors_a4d823d288d403d377323281658a1aefe}} 
+{\bfseries engzee\+\_\+fake\+\_\+delay}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}ECG heartbeat detection algorithms
+General useage instructions:
+r_peaks = detectors.the_detector(ecg_in_samples)
+The argument ecg_in_samples is a single channel ECG in volt
+at the given sample rate.
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classecgdetectors_1_1Detectors_a35f3abf129faa91e9f1bab29e4f3bb63}\label{classecgdetectors_1_1Detectors_a35f3abf129faa91e9f1bab29e4f3bb63}} 
+\index{ecgdetectors.Detectors@{ecgdetectors.Detectors}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!ecgdetectors.Detectors@{ecgdetectors.Detectors}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily def ecgdetectors.\+Detectors.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{sampling\+\_\+frequency }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}The constructor takes the sampling rate in Hz of the ECG data.
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classecgdetectors_1_1Detectors_ae8ce358a4000bfcb122a161e05d32626}\label{classecgdetectors_1_1Detectors_ae8ce358a4000bfcb122a161e05d32626}} 
+\index{ecgdetectors.Detectors@{ecgdetectors.Detectors}!christov\_detector@{christov\_detector}}
+\index{christov\_detector@{christov\_detector}!ecgdetectors.Detectors@{ecgdetectors.Detectors}}
+\doxysubsubsection{\texorpdfstring{christov\_detector()}{christov\_detector()}}
+{\footnotesize\ttfamily def ecgdetectors.\+Detectors.\+christov\+\_\+detector (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{unfiltered\+\_\+ecg }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Ivaylo I. Christov, 
+Real time electrocardiogram QRS detection using combined 
+adaptive threshold, BioMedical Engineering OnLine 2004, 
+vol. 3:28, 2004.
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classecgdetectors_1_1Detectors_afbfec39f8caf15d11ac6b2e119efaa3c}\label{classecgdetectors_1_1Detectors_afbfec39f8caf15d11ac6b2e119efaa3c}} 
+\index{ecgdetectors.Detectors@{ecgdetectors.Detectors}!engzee\_detector@{engzee\_detector}}
+\index{engzee\_detector@{engzee\_detector}!ecgdetectors.Detectors@{ecgdetectors.Detectors}}
+\doxysubsubsection{\texorpdfstring{engzee\_detector()}{engzee\_detector()}}
+{\footnotesize\ttfamily def ecgdetectors.\+Detectors.\+engzee\+\_\+detector (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{unfiltered\+\_\+ecg }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}C. Zeelenberg, A single scan algorithm for QRS detection and
+feature extraction, IEEE Comp. in Cardiology, vol. 6,
+pp. 37-42, 1979 with modifications A. Lourenco, H. Silva,
+P. Leite, R. Lourenco and A. Fred, “Real Time
+Electrocardiogram Segmentation for Finger Based ECG
+Biometrics”, BIOSIGNALS 2012, pp. 49-54, 2012.
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classecgdetectors_1_1Detectors_abc638b1583805c449fad32b9b025138c}\label{classecgdetectors_1_1Detectors_abc638b1583805c449fad32b9b025138c}} 
+\index{ecgdetectors.Detectors@{ecgdetectors.Detectors}!hamilton\_detector@{hamilton\_detector}}
+\index{hamilton\_detector@{hamilton\_detector}!ecgdetectors.Detectors@{ecgdetectors.Detectors}}
+\doxysubsubsection{\texorpdfstring{hamilton\_detector()}{hamilton\_detector()}}
+{\footnotesize\ttfamily def ecgdetectors.\+Detectors.\+hamilton\+\_\+detector (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{unfiltered\+\_\+ecg }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}P.S. Hamilton, 
+Open Source ECG Analysis Software Documentation, E.P.Limited, 2002.
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classecgdetectors_1_1Detectors_aa6cc04acb341991ff92191c34dda7182}\label{classecgdetectors_1_1Detectors_aa6cc04acb341991ff92191c34dda7182}} 
+\index{ecgdetectors.Detectors@{ecgdetectors.Detectors}!matched\_filter\_detector@{matched\_filter\_detector}}
+\index{matched\_filter\_detector@{matched\_filter\_detector}!ecgdetectors.Detectors@{ecgdetectors.Detectors}}
+\doxysubsubsection{\texorpdfstring{matched\_filter\_detector()}{matched\_filter\_detector()}}
+{\footnotesize\ttfamily def ecgdetectors.\+Detectors.\+matched\+\_\+filter\+\_\+detector (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{unfiltered\+\_\+ecg,  }\item[{}]{template\+\_\+file = {\ttfamily \char`\"{}\char`\"{}} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}FIR matched filter using template of QRS complex.
+Template provided for 250Hz and 360Hz. Optionally provide your
+own template file where every line has one sample.
+Uses the Pan and Tompkins thresholding method.
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classecgdetectors_1_1Detectors_af9673d7fd4ec31df4270046d34d10faa}\label{classecgdetectors_1_1Detectors_af9673d7fd4ec31df4270046d34d10faa}} 
+\index{ecgdetectors.Detectors@{ecgdetectors.Detectors}!pan\_tompkins\_detector@{pan\_tompkins\_detector}}
+\index{pan\_tompkins\_detector@{pan\_tompkins\_detector}!ecgdetectors.Detectors@{ecgdetectors.Detectors}}
+\doxysubsubsection{\texorpdfstring{pan\_tompkins\_detector()}{pan\_tompkins\_detector()}}
+{\footnotesize\ttfamily def ecgdetectors.\+Detectors.\+pan\+\_\+tompkins\+\_\+detector (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{unfiltered\+\_\+ecg,  }\item[{}]{M\+W\+A\+\_\+name = {\ttfamily \textquotesingle{}cumulative\textquotesingle{}} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Jiapu Pan and Willis J. Tompkins.
+A Real-Time QRS Detection Algorithm. 
+In: IEEE Transactions on Biomedical Engineering 
+BME-32.3 (1985), pp. 230–236.
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classecgdetectors_1_1Detectors_a9cd3e2ac068417bfec07301807e99d6b}\label{classecgdetectors_1_1Detectors_a9cd3e2ac068417bfec07301807e99d6b}} 
+\index{ecgdetectors.Detectors@{ecgdetectors.Detectors}!swt\_detector@{swt\_detector}}
+\index{swt\_detector@{swt\_detector}!ecgdetectors.Detectors@{ecgdetectors.Detectors}}
+\doxysubsubsection{\texorpdfstring{swt\_detector()}{swt\_detector()}}
+{\footnotesize\ttfamily def ecgdetectors.\+Detectors.\+swt\+\_\+detector (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{unfiltered\+\_\+ecg }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Stationary Wavelet Transform 
+based on Vignesh Kalidas and Lakshman Tamil. 
+Real-time QRS detector using Stationary Wavelet Transform 
+for Automated ECG Analysis. 
+In: 2017 IEEE 17th International Conference on 
+Bioinformatics and Bioengineering (BIBE). 
+Uses the Pan and Tompkins thresolding.
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classecgdetectors_1_1Detectors_ad4fc67c40c78d0049d62fbcf19b2ea7f}\label{classecgdetectors_1_1Detectors_ad4fc67c40c78d0049d62fbcf19b2ea7f}} 
+\index{ecgdetectors.Detectors@{ecgdetectors.Detectors}!two\_average\_detector@{two\_average\_detector}}
+\index{two\_average\_detector@{two\_average\_detector}!ecgdetectors.Detectors@{ecgdetectors.Detectors}}
+\doxysubsubsection{\texorpdfstring{two\_average\_detector()}{two\_average\_detector()}}
+{\footnotesize\ttfamily def ecgdetectors.\+Detectors.\+two\+\_\+average\+\_\+detector (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{unfiltered\+\_\+ecg,  }\item[{}]{M\+W\+A\+\_\+name = {\ttfamily \textquotesingle{}cumulative\textquotesingle{}} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Elgendi, Mohamed & Jonkman, 
+Mirjam & De Boer, Friso. (2010).
+Frequency Bands Effects on QRS Detection.
+The 3rd International Conference on Bio-inspired Systems 
+and Signal Processing (BIOSIGNALS2010). 428-431.
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classecgdetectors_1_1Detectors_a62fd2fbdd5762bcb086a77b1be6fd2fa}\label{classecgdetectors_1_1Detectors_a62fd2fbdd5762bcb086a77b1be6fd2fa}} 
+\index{ecgdetectors.Detectors@{ecgdetectors.Detectors}!wqrs\_detector@{wqrs\_detector}}
+\index{wqrs\_detector@{wqrs\_detector}!ecgdetectors.Detectors@{ecgdetectors.Detectors}}
+\doxysubsubsection{\texorpdfstring{wqrs\_detector()}{wqrs\_detector()}}
+{\footnotesize\ttfamily def ecgdetectors.\+Detectors.\+wqrs\+\_\+detector (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{unfiltered\+\_\+ecg }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}based on W Zong, GB Moody, D Jiang 
+A Robust Open-source Algorithm to Detect Onset and Duration of QRS
+Complexes 
+In: 2003 IEEE
+\end{DoxyVerb}
+ 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+ecgdetectors.\+py\end{DoxyCompactItemize}
