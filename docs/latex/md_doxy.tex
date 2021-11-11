@@ -1,0 +1,35 @@
+A collection of 7 E\+CG heartbeat detection algorithms implemented in Python. Developed in conjunction with a new E\+CG database\+: \href{http://researchdata.gla.ac.uk/716/}{\texttt{ http\+://researchdata.\+gla.\+ac.\+uk/716/}}. This repository also contains a testing class for the M\+I\+T\+DB and the new University of Glasgow database. In addition the module {\ttfamily hrv} provides tools to analyse heartrate variability.\hypertarget{md_doxy_autotoc_md1}{}\doxysection{Installation}\label{md_doxy_autotoc_md1}
+\hypertarget{md_doxy_autotoc_md2}{}\doxysubsection{Linux / Mac}\label{md_doxy_autotoc_md2}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{pip3 install py-\/ecg-\/detectors [-\/-\/user]}
+\end{DoxyCode}
+\hypertarget{md_doxy_autotoc_md3}{}\doxysubsection{Windows}\label{md_doxy_autotoc_md3}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{pip install py-\/ecg-\/detectors [-\/-\/user]}
+\end{DoxyCode}
+\hypertarget{md_doxy_autotoc_md4}{}\doxysubsection{From source}\label{md_doxy_autotoc_md4}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{python3 setup.py install [-\/-\/user]}
+\end{DoxyCode}
+
+
+Use the option {\ttfamily -\/-\/user} if you don\textquotesingle{}t have system-\/wise write permission.\hypertarget{md_doxy_autotoc_md5}{}\doxysection{E\+C\+G Detector Class Usage}\label{md_doxy_autotoc_md5}
+Before the detectors can be used the class must first be initalised with the sampling rate of the E\+CG recording\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{from ecgdetectors import Detectors}
+\DoxyCodeLine{detectors = Detectors(fs)}
+\end{DoxyCode}
+
+
+See {\ttfamily usage\+\_\+example.\+py} for an example of how to use the detectors.\hypertarget{md_doxy_autotoc_md6}{}\doxysection{Authors}\label{md_doxy_autotoc_md6}
+Luis Howell, \href{mailto:luisbhowell@gmail.com}{\texttt{ luisbhowell@gmail.\+com}}
+
+Bernd Porr, \href{mailto:bernd.porr@glasgow.ac.uk}{\texttt{ bernd.\+porr@glasgow.\+ac.\+uk}}\hypertarget{md_doxy_autotoc_md7}{}\doxysection{citation / D\+OI}\label{md_doxy_autotoc_md7}
+D\+OI\+: 10.\+5281/zenodo.3353396
+
+\href{https://doi.org/10.5281/zenodo.3353396}{\texttt{ https\+://doi.\+org/10.\+5281/zenodo.\+3353396}} 
