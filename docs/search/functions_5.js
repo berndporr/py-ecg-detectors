@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['hamilton_5fdetector_32',['hamilton_detector',['../classecgdetectors_1_1Detectors.html#abc638b1583805c449fad32b9b025138c',1,'ecgdetectors::Detectors']]],
-  ['hr_33',['HR',['../classhrv_1_1HRV.html#a117bb3f4632b2c5d89ebc185becf7160',1,'hrv::HRV']]]
+  ['hamilton_5fdetector_33',['hamilton_detector',['../classecgdetectors_1_1Detectors.html#abc638b1583805c449fad32b9b025138c',1,'ecgdetectors::Detectors']]],
+  ['hr_34',['HR',['../classhrv_1_1HRV.html#a117bb3f4632b2c5d89ebc185becf7160',1,'hrv::HRV']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['ecgdetectors_25',['ecgdetectors',['../namespaceecgdetectors.html',1,'']]]
+  ['ecgdetectors_26',['ecgdetectors',['../namespaceecgdetectors.html',1,'']]]
 ];
