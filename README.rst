@@ -2,7 +2,7 @@
 ECG Detectors
 =============
 
-A collection of 7 ECG heartbeat detection algorithms implemented in Python. Developed in conjunction with a new ECG database: http://researchdata.gla.ac.uk/716/. This repository also contains a testing class for the MITDB and the new University of Glasgow database. In addition the module `hrv` provides tools to
+A collection of 8 ECG heartbeat detection algorithms implemented in Python. Developed in conjunction with a new ECG database: http://researchdata.gla.ac.uk/716/. This repository also contains a testing class for the MITDB and the new University of Glasgow database. In addition the module `hrv` provides tools to
 analyse heartrate variability.
 
 

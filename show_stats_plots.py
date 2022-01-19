@@ -223,7 +223,7 @@ print("\n\n\n")
 
 # calculating results
 mitdb_avg,mitdb_std = get_result(mitdb_results, _tester_utils.det_names)
-print("mitdb:",mitdb_avg)
+print("mitdb:\n",_tester_utils.det_fullnames,"\n",mitdb_avg)
 gudb_cs_sitting_avg,gudb_cs_sitting_std = get_result(gudb_cs_results,
                                                      _tester_utils.det_names, 'sitting')
 print("chest strap sitting:",gudb_cs_sitting_avg)
