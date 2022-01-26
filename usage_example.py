@@ -12,9 +12,9 @@ fs = 250
 
 detectors = Detectors(fs)
 
-r_peaks = detectors.two_average_detector(unfiltered_ecg)
+#r_peaks = detectors.two_average_detector(unfiltered_ecg)
 #r_peaks = detectors.matched_filter_detector(unfiltered_ecg,"templates/template_250hz.csv")
-#r_peaks = detectors.swt_detector(unfiltered_ecg)
+r_peaks = detectors.swt_detector(unfiltered_ecg)
 #r_peaks = detectors.engzee_detector(unfiltered_ecg)
 #r_peaks = detectors.christov_detector(unfiltered_ecg)
 #r_peaks = detectors.hamilton_detector(unfiltered_ecg)

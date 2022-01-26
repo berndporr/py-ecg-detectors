@@ -406,7 +406,7 @@ class Detectors:
         return squared_peaks
 
     
-    def swt_detector(self, unfiltered_ecg):
+    def swt_detector(self, unfiltered_ecg, MWA_name='cumulative'):
         """
         Stationary Wavelet Transform 
         based on Vignesh Kalidas and Lakshman Tamil. 
@@ -417,6 +417,7 @@ class Detectors:
         Uses the Pan and Tompkins thresolding.
         """
         
+        maxQRSduration = 0.150 #sec
         swt_level=3
         padding = -1
         for i in range(1000):
@@ -435,13 +436,11 @@ class Detectors:
 
         squared = swt_ecg*swt_ecg
 
-        f1 = 0.01/self.fs
-        f2 = 10/self.fs
+        N = int(maxQRSduration*self.fs)
+        mwa = MWA_from_name(MWA_name)(squared, N)
+        mwa[:int(maxQRSduration*self.fs*2)] = 0
 
-        b, a = signal.butter(3, [f1*2, f2*2], btype='bandpass')
-        filtered_squared = signal.lfilter(b, a, squared)       
-
-        filt_peaks = panPeakDetect(filtered_squared, self.fs)
+        filt_peaks = panPeakDetect(mwa, self.fs)
         
         return filt_peaks
 
@@ -454,6 +453,7 @@ class Detectors:
         BME-32.3 (1985), pp. 230–236.
         """
         
+        maxQRSduration = 0.150 #sec
         f1 = 5/self.fs
         f2 = 15/self.fs
 
@@ -465,9 +465,9 @@ class Detectors:
 
         squared = diff*diff
 
-        N = int(0.12*self.fs)
+        N = int(maxQRSduration*self.fs)
         mwa = MWA_from_name(MWA_name)(squared, N)
-        mwa[:int(0.2*self.fs)] = 0
+        mwa[:int(maxQRSduration*self.fs*2)] = 0
 
         mwa_peaks = panPeakDetect(mwa, self.fs)
 
