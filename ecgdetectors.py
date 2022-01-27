@@ -1,9 +1,9 @@
 """
-A collection of 7 ECG heartbeat detection algorithms implemented
+A collection of ECG heartbeat detection algorithms implemented
 in Python. Developed in conjunction with a new ECG database:
-http://researchdata.gla.ac.uk/716/.
+http://researchdata.gla.ac.uk/716/
 
-Copyright (C) 2019 Luis Howell & Bernd Porr
+Copyright (C) 2019-2022 Luis Howell & Bernd Porr
 GPL GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
 """
 
@@ -23,7 +23,7 @@ class Detectors:
     The argument ecg_in_samples is a single channel ECG in volt
     at the given sample rate.
     """
-    
+
     def __init__(self, sampling_frequency):
         """
         The constructor takes the sampling rate in Hz of the ECG data.
@@ -32,6 +32,18 @@ class Detectors:
         self.fs = sampling_frequency
         # this is set to a positive value for benchmarking
         self.engzee_fake_delay = 0
+
+        # array of the different detectors
+        self.detector_methods = [
+            ["Elgendi et al (Two average)",self.two_average_detector],
+            ["Matched filter",self.matched_filter_detector],
+            ["Kalidas & Tamil (Wavelet transform)",self.swt_detector],
+            ["Engzee",self.engzee_detector],
+            ["Christov",self.christov_detector],
+            ["Hamilton",self.hamilton_detector],
+            ["Pan Tompkins",self.pan_tompkins_detector],
+            ["WQRS",self.wqrs_detector]
+        ]
 
     def hamilton_detector(self, unfiltered_ecg):
         """

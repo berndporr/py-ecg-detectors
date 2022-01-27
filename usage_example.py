@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pathlib
 from ecgdetectors import Detectors
+import sys
 
 current_dir = pathlib.Path(__file__).resolve()
 
@@ -12,9 +13,32 @@ fs = 250
 
 detectors = Detectors(fs)
 
+# selected detector by the user (default is the two average one)
+seldet = -1
+
+if len(sys.argv) > 1:
+    seldet = int(sys.argv[1])
+else:
+    print("Select another detector by specifying the index as: {} <index>".format(sys.argv[0]))
+
+print("The following detectors are available:")
+for i in range(len(detectors.detector_methods)):
+    if i == seldet:
+        d = "(selected)"
+    else:
+        d = ""
+    print(i,detectors.detector_methods[i][0],d)
+
+if seldet < 0:
+    r_peaks = detectors.two_average_detector(unfiltered_ecg)
+else:
+    # We use the input argument to select a detector
+    r_peaks = detectors.detector_methods[seldet][1](unfiltered_ecg)
+
+# If you want to always use the same det then directly call it:
 #r_peaks = detectors.two_average_detector(unfiltered_ecg)
 #r_peaks = detectors.matched_filter_detector(unfiltered_ecg,"templates/template_250hz.csv")
-r_peaks = detectors.swt_detector(unfiltered_ecg)
+#r_peaks = detectors.swt_detector(unfiltered_ecg)
 #r_peaks = detectors.engzee_detector(unfiltered_ecg)
 #r_peaks = detectors.christov_detector(unfiltered_ecg)
 #r_peaks = detectors.hamilton_detector(unfiltered_ecg)
@@ -25,6 +49,6 @@ r_peaks = detectors.swt_detector(unfiltered_ecg)
 plt.figure()
 plt.plot(unfiltered_ecg)
 plt.plot(r_peaks, unfiltered_ecg[r_peaks], 'ro')
-plt.title('Detected R-peaks')
+plt.title("Detected R peaks")
 
 plt.show()
