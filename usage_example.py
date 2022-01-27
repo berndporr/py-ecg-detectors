@@ -23,6 +23,7 @@ else:
     print("The following detectors are available:")
     for i in range(len(detectors.detector_methods)):
         print(i,detectors.detector_methods[i][0])
+    print("The default detector is the Two Average detector.")
 
 if seldet < 0:
     # default detector
