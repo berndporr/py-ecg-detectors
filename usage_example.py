@@ -20,16 +20,12 @@ if len(sys.argv) > 1:
     seldet = int(sys.argv[1])
 else:
     print("Select another detector by specifying the index as: {} <index>".format(sys.argv[0]))
-
-print("The following detectors are available:")
-for i in range(len(detectors.detector_methods)):
-    if i == seldet:
-        d = "(selected)"
-    else:
-        d = ""
-    print(i,detectors.detector_methods[i][0],d)
+    print("The following detectors are available:")
+    for i in range(len(detectors.detector_methods)):
+        print(i,detectors.detector_methods[i][0])
 
 if seldet < 0:
+    # default detector
     r_peaks = detectors.two_average_detector(unfiltered_ecg)
 else:
     # We use the input argument to select a detector
