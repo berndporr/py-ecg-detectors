@@ -29,12 +29,14 @@ class Detectors:
         The constructor takes the sampling rate in Hz of the ECG data.
         """
 
+        ## Sampling rate
         self.fs = sampling_frequency
-        # this is set to a positive value for benchmarking
+
+        ## This is set to a positive value for benchmarking
         self.engzee_fake_delay = 0
 
-        # array of the different detectors
-        self.detector_methods = [
+        ## 2D Array of the different detectors: [[description,detector]]
+        self.detector_list = [
             ["Elgendi et al (Two average)",self.two_average_detector],
             ["Matched filter",self.matched_filter_detector],
             ["Kalidas & Tamil (Wavelet transform)",self.swt_detector],
