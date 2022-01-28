@@ -194,7 +194,7 @@ Luis Howell, luisbhowell@gmail.com
 Bernd Porr, bernd.porr@glasgow.ac.uk
 
 
-citation / DOI
+Citation / DOI
 ==============
 
 DOI: 10.5281/zenodo.3353396
