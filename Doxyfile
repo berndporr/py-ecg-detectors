@@ -44,7 +44,7 @@ PROJECT_NUMBER         =
 # for a project that appears at the top of each page and should give viewer a
 # quick idea about the purpose of the project. Keep the description short.
 
-PROJECT_BRIEF          = "A collection of 7 ECG heartbeat detection algorithms implemented in Python: https://github.com/berndporr/py-ecg-detectors"
+PROJECT_BRIEF          = "A collection of ECG heartbeat detection algorithms implemented in Python: https://github.com/berndporr/py-ecg-detectors"
 
 # With the PROJECT_LOGO tag one can specify a logo or an icon that is included
 # in the documentation. The maximum height of the logo should not exceed 55

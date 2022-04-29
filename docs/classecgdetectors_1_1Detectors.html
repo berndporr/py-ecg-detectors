@@ -23,7 +23,7 @@
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ECG R Peak detectors
    </div>
-   <div id="projectbrief">A collection of 7 ECG heartbeat detection algorithms implemented in Python: https://github.com/berndporr/py-ecg-detectors</div>
+   <div id="projectbrief">A collection of ECG heartbeat detection algorithms implemented in Python: https://github.com/berndporr/py-ecg-detectors</div>
   </td>
  </tr>
  </tbody>
@@ -87,8 +87,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:afbfec39f8caf15d11ac6b2e119efaa3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa6cc04acb341991ff92191c34dda7182"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classecgdetectors_1_1Detectors.html#aa6cc04acb341991ff92191c34dda7182">matched_filter_detector</a> (self, unfiltered_ecg, template_file=&quot;&quot;)</td></tr>
 <tr class="separator:aa6cc04acb341991ff92191c34dda7182"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9cd3e2ac068417bfec07301807e99d6b"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classecgdetectors_1_1Detectors.html#a9cd3e2ac068417bfec07301807e99d6b">swt_detector</a> (self, unfiltered_ecg)</td></tr>
-<tr class="separator:a9cd3e2ac068417bfec07301807e99d6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0dc700552e3dda4b9795a5ee0e24c37"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classecgdetectors_1_1Detectors.html#ad0dc700552e3dda4b9795a5ee0e24c37">swt_detector</a> (self, unfiltered_ecg, MWA_name='cumulative')</td></tr>
+<tr class="separator:ad0dc700552e3dda4b9795a5ee0e24c37"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af9673d7fd4ec31df4270046d34d10faa"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classecgdetectors_1_1Detectors.html#af9673d7fd4ec31df4270046d34d10faa">pan_tompkins_detector</a> (self, unfiltered_ecg, MWA_name='cumulative')</td></tr>
 <tr class="separator:af9673d7fd4ec31df4270046d34d10faa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad4fc67c40c78d0049d62fbcf19b2ea7f"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classecgdetectors_1_1Detectors.html#ad4fc67c40c78d0049d62fbcf19b2ea7f">two_average_detector</a> (self, unfiltered_ecg, MWA_name='cumulative')</td></tr>
@@ -99,11 +99,17 @@ Public Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:ae8b52f9bda034423918edaed6e941da0"><td class="memItemLeft" align="right" valign="top"><a id="ae8b52f9bda034423918edaed6e941da0"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>fs</b></td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classecgdetectors_1_1Detectors.html#ae8b52f9bda034423918edaed6e941da0">fs</a></td></tr>
+<tr class="memdesc:ae8b52f9bda034423918edaed6e941da0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sampling rate. <br /></td></tr>
 <tr class="separator:ae8b52f9bda034423918edaed6e941da0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4d823d288d403d377323281658a1aefe"><td class="memItemLeft" align="right" valign="top"><a id="a4d823d288d403d377323281658a1aefe"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>engzee_fake_delay</b></td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classecgdetectors_1_1Detectors.html#a4d823d288d403d377323281658a1aefe">engzee_fake_delay</a></td></tr>
+<tr class="memdesc:a4d823d288d403d377323281658a1aefe"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is set to a positive value for benchmarking. <br /></td></tr>
 <tr class="separator:a4d823d288d403d377323281658a1aefe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55d42825f73b72e4f589fd3c00858416"><td class="memItemLeft" align="right" valign="top"><a id="a55d42825f73b72e4f589fd3c00858416"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classecgdetectors_1_1Detectors.html#a55d42825f73b72e4f589fd3c00858416">detector_list</a></td></tr>
+<tr class="memdesc:a55d42825f73b72e4f589fd3c00858416"><td class="mdescLeft">&#160;</td><td class="mdescRight">2D Array of the different detectors: [[description,detector]] <br /></td></tr>
+<tr class="separator:a55d42825f73b72e4f589fd3c00858416"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><pre class="fragment">ECG heartbeat detection algorithms
@@ -314,8 +320,8 @@ BME-32.3 (1985), pp. 230–236.
 </pre> 
 </div>
 </div>
-<a id="a9cd3e2ac068417bfec07301807e99d6b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9cd3e2ac068417bfec07301807e99d6b">&#9670;&nbsp;</a></span>swt_detector()</h2>
+<a id="ad0dc700552e3dda4b9795a5ee0e24c37"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad0dc700552e3dda4b9795a5ee0e24c37">&#9670;&nbsp;</a></span>swt_detector()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -330,7 +336,13 @@ BME-32.3 (1985), pp. 230–236.
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>unfiltered_ecg</em>&#160;</td>
+          <td class="paramname"><em>unfiltered_ecg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>MWA_name</em> = <code>'cumulative'</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
