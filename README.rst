@@ -5,6 +5,22 @@ ECG Detectors
 A collection of 8 ECG heartbeat detection algorithms implemented in Python. Developed in conjunction with a new ECG database: http://researchdata.gla.ac.uk/716/. This repository also contains a testing class for the MITDB and the new University of Glasgow database. In addition the module `hrv` provides tools to
 analyse heartrate variability.
 
+Authors
+=======
+
+Luis Howell, luisbhowell@gmail.com
+
+Bernd Porr, bernd.porr@glasgow.ac.uk
+
+
+Citation / DOI
+==============
+
+DOI: 10.5281/zenodo.3353396
+
+https://doi.org/10.5281/zenodo.3353396
+
+
 
 Installation
 ============
@@ -168,19 +184,3 @@ most likely introducing delays as the ECG will be always filtered by causal
 filters. In other words most
 detectors cause a delay between the R peak and its detection. That delay
 should of course be constant so that the resulting HR and HRV is correct.
-
-
-Authors
-=======
-
-Luis Howell, luisbhowell@gmail.com
-
-Bernd Porr, bernd.porr@glasgow.ac.uk
-
-
-Citation / DOI
-==============
-
-DOI: 10.5281/zenodo.3353396
-
-https://doi.org/10.5281/zenodo.3353396

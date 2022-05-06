@@ -7,7 +7,7 @@ with open('README.rst') as f:
 
 setup(
     name='py-ecg-detectors',
-    version='1.2.0',
+    version='1.2.1',
     description="Seven ECG heartbeat detection algorithms and heartrate variability analysis",
     long_description=long_description,
     author='Luis Howell, Bernd Porr',
