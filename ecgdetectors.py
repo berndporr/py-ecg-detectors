@@ -9,6 +9,8 @@ GPL GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
 
 import numpy as np
 import pywt
+import ecgtemplates
+
 try:
     import pathlib
 except ImportError:
@@ -380,7 +382,7 @@ class Detectors:
         return r_peaks
 
     
-    def matched_filter_detector(self, unfiltered_ecg, template_file = ""):
+    def matched_filter_detector(self, unfiltered_ecg, template_file = False):
         """
         FIR matched filter using template of QRS complex.
         Template provided for 250Hz and 360Hz. Optionally provide your
@@ -389,18 +391,15 @@ class Detectors:
         """
         current_dir = pathlib.Path(__file__).resolve()
 
-        if len(template_file) > 1:
+        if template_file:
             template = np.loadtxt(template_file)
         else:
             if self.fs == 250:
-                template_dir = current_dir.parent/'templates'/'template_250hz.csv'
-                template = np.loadtxt(template_dir)
+                template = ecgtemplates.qrs_250Hz
             elif self.fs == 360:
-                template_dir = current_dir.parent/'templates'/'template_360hz.csv'
-                template = np.loadtxt(template_dir)
+                template = ecgtemplates.qrs_360Hz
             else:
-                print('\n!!No template for this frequency!!\n')
-                return False
+                raise ValueError("!! No stock template for fs = {} !!".format(self.fs))
 
         f0 = 0.1/self.fs
         f1 = 48/self.fs
