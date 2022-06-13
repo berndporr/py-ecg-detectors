@@ -77,16 +77,18 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a35f3abf129faa91e9f1bab29e4f3bb63"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classecgdetectors_1_1Detectors.html#a35f3abf129faa91e9f1bab29e4f3bb63">__init__</a> (self, sampling_frequency)</td></tr>
-<tr class="separator:a35f3abf129faa91e9f1bab29e4f3bb63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b78d928e0bb683dcf3223d1e190d8f1"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classecgdetectors_1_1Detectors.html#a4b78d928e0bb683dcf3223d1e190d8f1">__init__</a> (self, sampling_frequency=False)</td></tr>
+<tr class="separator:a4b78d928e0bb683dcf3223d1e190d8f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52496359ade834480dbb144116f2f262"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classecgdetectors_1_1Detectors.html#a52496359ade834480dbb144116f2f262">get_detector_list</a> (self)</td></tr>
+<tr class="separator:a52496359ade834480dbb144116f2f262"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abc638b1583805c449fad32b9b025138c"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classecgdetectors_1_1Detectors.html#abc638b1583805c449fad32b9b025138c">hamilton_detector</a> (self, unfiltered_ecg)</td></tr>
 <tr class="separator:abc638b1583805c449fad32b9b025138c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae8ce358a4000bfcb122a161e05d32626"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classecgdetectors_1_1Detectors.html#ae8ce358a4000bfcb122a161e05d32626">christov_detector</a> (self, unfiltered_ecg)</td></tr>
 <tr class="separator:ae8ce358a4000bfcb122a161e05d32626"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afbfec39f8caf15d11ac6b2e119efaa3c"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classecgdetectors_1_1Detectors.html#afbfec39f8caf15d11ac6b2e119efaa3c">engzee_detector</a> (self, unfiltered_ecg)</td></tr>
 <tr class="separator:afbfec39f8caf15d11ac6b2e119efaa3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa6cc04acb341991ff92191c34dda7182"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classecgdetectors_1_1Detectors.html#aa6cc04acb341991ff92191c34dda7182">matched_filter_detector</a> (self, unfiltered_ecg, template_file=&quot;&quot;)</td></tr>
-<tr class="separator:aa6cc04acb341991ff92191c34dda7182"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9db0e60a7e2efd9982ff4c32f5a78db"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classecgdetectors_1_1Detectors.html#ac9db0e60a7e2efd9982ff4c32f5a78db">matched_filter_detector</a> (self, unfiltered_ecg, template_file=False)</td></tr>
+<tr class="separator:ac9db0e60a7e2efd9982ff4c32f5a78db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad0dc700552e3dda4b9795a5ee0e24c37"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classecgdetectors_1_1Detectors.html#ad0dc700552e3dda4b9795a5ee0e24c37">swt_detector</a> (self, unfiltered_ecg, MWA_name='cumulative')</td></tr>
 <tr class="separator:ad0dc700552e3dda4b9795a5ee0e24c37"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af9673d7fd4ec31df4270046d34d10faa"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classecgdetectors_1_1Detectors.html#af9673d7fd4ec31df4270046d34d10faa">pan_tompkins_detector</a> (self, unfiltered_ecg, MWA_name='cumulative')</td></tr>
@@ -118,8 +120,8 @@ r_peaks = detectors.the_detector(ecg_in_samples)
 The argument ecg_in_samples is a single channel ECG in volt
 at the given sample rate.
 </pre> </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a35f3abf129faa91e9f1bab29e4f3bb63"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a35f3abf129faa91e9f1bab29e4f3bb63">&#9670;&nbsp;</a></span>__init__()</h2>
+<a id="a4b78d928e0bb683dcf3223d1e190d8f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b78d928e0bb683dcf3223d1e190d8f1">&#9670;&nbsp;</a></span>__init__()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -134,7 +136,7 @@ at the given sample rate.
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>sampling_frequency</em>&#160;</td>
+          <td class="paramname"><em>sampling_frequency</em> = <code>False</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -144,6 +146,9 @@ at the given sample rate.
       </table>
 </div><div class="memdoc">
 <pre class="fragment">The constructor takes the sampling rate in Hz of the ECG data.
+The constructor can be called without speciying a sampling rate to
+just access the detector_list, however, detection won't
+be possible.
 </pre> 
 </div>
 </div>
@@ -214,6 +219,29 @@ Biometrics”, BIOSIGNALS 2012, pp. 49-54, 2012.
 </pre> 
 </div>
 </div>
+<a id="a52496359ade834480dbb144116f2f262"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a52496359ade834480dbb144116f2f262">&#9670;&nbsp;</a></span>get_detector_list()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def ecgdetectors.Detectors.get_detector_list </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Returns a 2D array of the different detectors in the form:
+[[description1,detector1],[description2,detector2], ...]
+where description is a string and detector a function pointer
+to the detector. Use this for benchmarking to loop through
+detectors.
+</pre> 
+</div>
+</div>
 <a id="abc638b1583805c449fad32b9b025138c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#abc638b1583805c449fad32b9b025138c">&#9670;&nbsp;</a></span>hamilton_detector()</h2>
 
@@ -244,8 +272,8 @@ Open Source ECG Analysis Software Documentation, E.P.Limited, 2002.
 </pre> 
 </div>
 </div>
-<a id="aa6cc04acb341991ff92191c34dda7182"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa6cc04acb341991ff92191c34dda7182">&#9670;&nbsp;</a></span>matched_filter_detector()</h2>
+<a id="ac9db0e60a7e2efd9982ff4c32f5a78db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac9db0e60a7e2efd9982ff4c32f5a78db">&#9670;&nbsp;</a></span>matched_filter_detector()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -266,7 +294,7 @@ Open Source ECG Analysis Software Documentation, E.P.Limited, 2002.
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>template_file</em> = <code>&quot;&quot;</code>&#160;</td>
+          <td class="paramname"><em>template_file</em> = <code>False</code>&#160;</td>
         </tr>
         <tr>
           <td></td>

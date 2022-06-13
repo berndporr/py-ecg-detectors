@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['nn20_15',['NN20',['../classhrv_1_1HRV.html#a6f120509a245ea92d8d878d80f31ea10',1,'hrv::HRV']]],
-  ['nn50_16',['NN50',['../classhrv_1_1HRV.html#a433e98fde9df804b6b4f6beb99404504',1,'hrv::HRV']]]
+  ['matched_5ffilter_5fdetector_15',['matched_filter_detector',['../classecgdetectors_1_1Detectors.html#ac9db0e60a7e2efd9982ff4c32f5a78db',1,'ecgdetectors::Detectors']]]
 ];

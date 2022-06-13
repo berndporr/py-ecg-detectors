@@ -3,7 +3,9 @@
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-def \mbox{\hyperlink{classecgdetectors_1_1Detectors_a35f3abf129faa91e9f1bab29e4f3bb63}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, sampling\+\_\+frequency)
+def \mbox{\hyperlink{classecgdetectors_1_1Detectors_a4b78d928e0bb683dcf3223d1e190d8f1}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, sampling\+\_\+frequency=False)
+\item 
+def \mbox{\hyperlink{classecgdetectors_1_1Detectors_a52496359ade834480dbb144116f2f262}{get\+\_\+detector\+\_\+list}} (self)
 \item 
 def \mbox{\hyperlink{classecgdetectors_1_1Detectors_abc638b1583805c449fad32b9b025138c}{hamilton\+\_\+detector}} (self, unfiltered\+\_\+ecg)
 \item 
@@ -11,7 +13,7 @@ def \mbox{\hyperlink{classecgdetectors_1_1Detectors_ae8ce358a4000bfcb122a161e05d
 \item 
 def \mbox{\hyperlink{classecgdetectors_1_1Detectors_afbfec39f8caf15d11ac6b2e119efaa3c}{engzee\+\_\+detector}} (self, unfiltered\+\_\+ecg)
 \item 
-def \mbox{\hyperlink{classecgdetectors_1_1Detectors_aa6cc04acb341991ff92191c34dda7182}{matched\+\_\+filter\+\_\+detector}} (self, unfiltered\+\_\+ecg, template\+\_\+file=\char`\"{}\char`\"{})
+def \mbox{\hyperlink{classecgdetectors_1_1Detectors_ac9db0e60a7e2efd9982ff4c32f5a78db}{matched\+\_\+filter\+\_\+detector}} (self, unfiltered\+\_\+ecg, template\+\_\+file=False)
 \item 
 def \mbox{\hyperlink{classecgdetectors_1_1Detectors_ad0dc700552e3dda4b9795a5ee0e24c37}{swt\+\_\+detector}} (self, unfiltered\+\_\+ecg, M\+W\+A\+\_\+name=\textquotesingle{}cumulative\textquotesingle{})
 \item 
@@ -45,13 +47,16 @@ at the given sample rate.
  
 
 \doxysubsection{Constructor \& Destructor Documentation}
-\mbox{\Hypertarget{classecgdetectors_1_1Detectors_a35f3abf129faa91e9f1bab29e4f3bb63}\label{classecgdetectors_1_1Detectors_a35f3abf129faa91e9f1bab29e4f3bb63}} 
+\mbox{\Hypertarget{classecgdetectors_1_1Detectors_a4b78d928e0bb683dcf3223d1e190d8f1}\label{classecgdetectors_1_1Detectors_a4b78d928e0bb683dcf3223d1e190d8f1}} 
 \index{ecgdetectors.Detectors@{ecgdetectors.Detectors}!\_\_init\_\_@{\_\_init\_\_}}
 \index{\_\_init\_\_@{\_\_init\_\_}!ecgdetectors.Detectors@{ecgdetectors.Detectors}}
 \doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
-{\footnotesize\ttfamily def ecgdetectors.\+Detectors.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{sampling\+\_\+frequency }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily def ecgdetectors.\+Detectors.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{sampling\+\_\+frequency = {\ttfamily False} }\end{DoxyParamCaption})}
 
 \begin{DoxyVerb}The constructor takes the sampling rate in Hz of the ECG data.
+The constructor can be called without speciying a sampling rate to
+just access the detector_list, however, detection won't
+be possible.
 \end{DoxyVerb}
  
 
@@ -80,6 +85,18 @@ P. Leite, R. Lourenco and A. Fred, “Real Time
 Electrocardiogram Segmentation for Finger Based ECG
 Biometrics”, BIOSIGNALS 2012, pp. 49-54, 2012.
 \end{DoxyVerb}
+ \mbox{\Hypertarget{classecgdetectors_1_1Detectors_a52496359ade834480dbb144116f2f262}\label{classecgdetectors_1_1Detectors_a52496359ade834480dbb144116f2f262}} 
+\index{ecgdetectors.Detectors@{ecgdetectors.Detectors}!get\_detector\_list@{get\_detector\_list}}
+\index{get\_detector\_list@{get\_detector\_list}!ecgdetectors.Detectors@{ecgdetectors.Detectors}}
+\doxysubsubsection{\texorpdfstring{get\_detector\_list()}{get\_detector\_list()}}
+{\footnotesize\ttfamily def ecgdetectors.\+Detectors.\+get\+\_\+detector\+\_\+list (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Returns a 2D array of the different detectors in the form:
+[[description1,detector1],[description2,detector2], ...]
+where description is a string and detector a function pointer
+to the detector. Use this for benchmarking to loop through
+detectors.
+\end{DoxyVerb}
  \mbox{\Hypertarget{classecgdetectors_1_1Detectors_abc638b1583805c449fad32b9b025138c}\label{classecgdetectors_1_1Detectors_abc638b1583805c449fad32b9b025138c}} 
 \index{ecgdetectors.Detectors@{ecgdetectors.Detectors}!hamilton\_detector@{hamilton\_detector}}
 \index{hamilton\_detector@{hamilton\_detector}!ecgdetectors.Detectors@{ecgdetectors.Detectors}}
@@ -89,11 +106,11 @@ Biometrics”, BIOSIGNALS 2012, pp. 49-54, 2012.
 \begin{DoxyVerb}P.S. Hamilton, 
 Open Source ECG Analysis Software Documentation, E.P.Limited, 2002.
 \end{DoxyVerb}
- \mbox{\Hypertarget{classecgdetectors_1_1Detectors_aa6cc04acb341991ff92191c34dda7182}\label{classecgdetectors_1_1Detectors_aa6cc04acb341991ff92191c34dda7182}} 
+ \mbox{\Hypertarget{classecgdetectors_1_1Detectors_ac9db0e60a7e2efd9982ff4c32f5a78db}\label{classecgdetectors_1_1Detectors_ac9db0e60a7e2efd9982ff4c32f5a78db}} 
 \index{ecgdetectors.Detectors@{ecgdetectors.Detectors}!matched\_filter\_detector@{matched\_filter\_detector}}
 \index{matched\_filter\_detector@{matched\_filter\_detector}!ecgdetectors.Detectors@{ecgdetectors.Detectors}}
 \doxysubsubsection{\texorpdfstring{matched\_filter\_detector()}{matched\_filter\_detector()}}
-{\footnotesize\ttfamily def ecgdetectors.\+Detectors.\+matched\+\_\+filter\+\_\+detector (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{unfiltered\+\_\+ecg,  }\item[{}]{template\+\_\+file = {\ttfamily \char`\"{}\char`\"{}} }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily def ecgdetectors.\+Detectors.\+matched\+\_\+filter\+\_\+detector (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{unfiltered\+\_\+ecg,  }\item[{}]{template\+\_\+file = {\ttfamily False} }\end{DoxyParamCaption})}
 
 \begin{DoxyVerb}FIR matched filter using template of QRS complex.
 Template provided for 250Hz and 360Hz. Optionally provide your

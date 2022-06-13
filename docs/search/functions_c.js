@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['wqrs_5fdetector_50',['wqrs_detector',['../classecgdetectors_1_1Detectors.html#a62fd2fbdd5762bcb086a77b1be6fd2fa',1,'ecgdetectors::Detectors']]]
+  ['two_5faverage_5fdetector_51',['two_average_detector',['../classecgdetectors_1_1Detectors.html#ad4fc67c40c78d0049d62fbcf19b2ea7f',1,'ecgdetectors::Detectors']]]
 ];

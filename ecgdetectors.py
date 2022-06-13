@@ -26,9 +26,12 @@ class Detectors:
     at the given sample rate.
     """
 
-    def __init__(self, sampling_frequency):
+    def __init__(self, sampling_frequency = False):
         """
         The constructor takes the sampling rate in Hz of the ECG data.
+        The constructor can be called without speciying a sampling rate to
+        just access the detector_list, however, detection won't
+        be possible.
         """
 
         ## Sampling rate
@@ -48,6 +51,16 @@ class Detectors:
             ["Pan Tompkins",self.pan_tompkins_detector],
             ["WQRS",self.wqrs_detector]
         ]
+
+    def get_detector_list(self):
+        """
+        Returns a 2D array of the different detectors in the form:
+        [[description1,detector1],[description2,detector2], ...]
+        where description is a string and detector a function pointer
+        to the detector. Use this for benchmarking to loop through
+        detectors.
+        """
+        return self.detector_list
 
     def hamilton_detector(self, unfiltered_ecg):
         """
