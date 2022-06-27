@@ -570,10 +570,11 @@ class Detectors:
         def length_transfrom(x, w):
             tmp = []
             for i in range(w, len(x)):
-                curr = 0
-                for k in range(i-w+1, i):
-                    curr += np.sqrt(np.power(1/self.fs, 2)+np.power(x[k]-x[k-1],2))
-                tmp.append(curr)
+                chunk = x[i-w:i]
+                ll = np.sum(
+                    np.sqrt( np.power(1/self.fs,2)*np.ones(w-1) + np.power(np.diff(chunk),2) )
+                )
+                tmp.append(ll)
             l = [tmp[0]]*w
             
             return l+tmp
