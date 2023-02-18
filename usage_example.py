@@ -44,10 +44,22 @@ else:
 #r_peaks = detectors.pan_tompkins_detector(unfiltered_ecg)
 #r_peaks = detectors.wqrs_detector(unfiltered_ecg)
 
+# convert the sample number to time
+r_ts = np.array(r_peaks) / fs
 
 plt.figure()
-plt.plot(unfiltered_ecg)
-plt.plot(r_peaks, unfiltered_ecg[r_peaks], 'ro')
+t = np.linspace(0, len(unfiltered_ecg) / fs, len(unfiltered_ecg))
+plt.plot(t, unfiltered_ecg)
+plt.plot(r_ts, unfiltered_ecg[r_peaks], 'ro')
 plt.title("Detected R peaks")
+plt.ylabel("ECG/mV")
+plt.xlabel("time/sec")
 
+intervals = np.diff(r_ts)
+heart_rate = 60.0/intervals
+plt.figure()
+plt.plot(r_ts[1:],heart_rate)
+plt.title("Heart rate")
+plt.xlabel("time/sec")
+plt.ylabel("HR/BPM")
 plt.show()
