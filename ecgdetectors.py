@@ -3,7 +3,7 @@ A collection of ECG heartbeat detection algorithms implemented
 in Python. Developed in conjunction with a new ECG database:
 http://researchdata.gla.ac.uk/716/
 
-Copyright (C) 2019-2022 Luis Howell & Bernd Porr
+Copyright (C) 2019-2023 Luis Howell & Bernd Porr
 GPL GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
 """
 

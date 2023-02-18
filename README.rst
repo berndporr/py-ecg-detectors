@@ -25,15 +25,11 @@ https://doi.org/10.5281/zenodo.3353396
 Installation
 ============
 
-Linux / Mac::
-
-  pip3 install py-ecg-detectors [--user]
-
-Windows::
+via PIP::
 
   pip install py-ecg-detectors [--user]
 
-From source::
+from source::
 
   python3 setup.py install [--user]
 
