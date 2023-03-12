@@ -2,12 +2,12 @@
 
 from setuptools import setup
 
-with open('README.rst') as f:
+with open('README.rst', encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
     name='py-ecg-detectors',
-    version='1.3.3',
+    version='1.3.4',
     description="Eight ECG heartbeat detection algorithms and heartrate variability analysis",
     long_description=long_description,
     author='Luis Howell, Bernd Porr',
