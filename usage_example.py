@@ -36,7 +36,7 @@ else:
 
 # If you want to always use the same det then directly call it:
 #r_peaks = detectors.two_average_detector(unfiltered_ecg)
-#r_peaks = detectors.matched_filter_detector(unfiltered_ecg,"templates/template_250hz.csv")
+#r_peaks = detectors.matched_filter_detector(unfiltered_ecg)
 #r_peaks = detectors.swt_detector(unfiltered_ecg)
 #r_peaks = detectors.engzee_detector(unfiltered_ecg)
 #r_peaks = detectors.christov_detector(unfiltered_ecg)
