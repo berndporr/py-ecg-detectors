@@ -10,6 +10,8 @@ GPL GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
 import numpy as np
 import pywt
 import ecgtemplates
+from bisect import insort
+from collections import deque
 
 try:
     import pathlib
@@ -85,12 +87,12 @@ class Detectors:
 
         ma[0:len(b)*2] = 0
 
-        n_pks = []
+        n_pks = deque([], maxlen=8)
         n_pks_ave = 0.0
-        s_pks = []
+        s_pks = deque([], maxlen=8)
         s_pks_ave = 0.0
         QRS = [0]
-        RR = []
+        RR = deque([], maxlen=8)
         RR_ave = 0.0
 
         th = 0.0
@@ -99,45 +101,32 @@ class Detectors:
         idx = []
         peaks = []  
 
-        for i in range(len(ma)):
+        for i in range(1, len(ma) - 1):
+            if ma[i - 1] < ma[i] and ma[i + 1] < ma[i]:
+                peak = i
+                peaks.append(i)
+                if ma[peak] > th and (peak-QRS[-1])>0.3*self.fs:        
+                    QRS.append(peak)
+                    idx.append(i)
+                    s_pks.append(ma[peak])
+                    s_pks_ave = np.mean(s_pks)
 
-            if i>0 and i<len(ma)-1:
-                if ma[i-1]<ma[i] and ma[i+1]<ma[i]:
-                    peak = i
-                    peaks.append(i)
+                    if (RR_ave != 0.0) and (QRS[-1]-QRS[-2] > 1.5*RR_ave):
+                        missed_peaks = peaks[idx[-2]+1:idx[-1]]
+                        for missed_peak in missed_peaks:
+                            if missed_peak-peaks[idx[-2]]>int(0.360*self.fs) and ma[missed_peak]>0.5*th:
+                                insort(QRS, missed_peak)
+                                break
 
-                    if ma[peak] > th and (peak-QRS[-1])>0.3*self.fs:        
-                        QRS.append(peak)
-                        idx.append(i)
-                        s_pks.append(ma[peak])
-                        if len(s_pks)>8:
-                            s_pks.pop(0)
-                        s_pks_ave = np.mean(s_pks)
+                    if len(QRS)>2:
+                        RR.append(QRS[-1]-QRS[-2])
+                        RR_ave = int(np.mean(RR))
 
-                        if RR_ave != 0.0:
-                            if QRS[-1]-QRS[-2] > 1.5*RR_ave:
-                                missed_peaks = peaks[idx[-2]+1:idx[-1]]
-                                for missed_peak in missed_peaks:
-                                    if missed_peak-peaks[idx[-2]]>int(0.360*self.fs) and ma[missed_peak]>0.5*th:
-                                        QRS.append(missed_peak)
-                                        QRS.sort()
-                                        break
+                else:
+                    n_pks.append(ma[peak])
+                    n_pks_ave = np.mean(n_pks)
 
-                        if len(QRS)>2:
-                            RR.append(QRS[-1]-QRS[-2])
-                            if len(RR)>8:
-                                RR.pop(0)
-                            RR_ave = int(np.mean(RR))
-
-                    else:
-                        n_pks.append(ma[peak])
-                        if len(n_pks)>8:
-                            n_pks.pop(0)
-                        n_pks_ave = np.mean(n_pks)
-
-                    th = n_pks_ave + 0.45*(s_pks_ave-n_pks_ave)
-
-                    i+=1
+                th = n_pks_ave + 0.45*(s_pks_ave-n_pks_ave)
 
         QRS.pop(0)
 
