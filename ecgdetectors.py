@@ -110,7 +110,7 @@ class Detectors:
                         QRS.append(peak)
                         idx.append(i)
                         s_pks.append(ma[peak])
-                        if len(n_pks)>8:
+                        if len(s_pks)>8:
                             s_pks.pop(0)
                         s_pks_ave = np.mean(s_pks)
 
