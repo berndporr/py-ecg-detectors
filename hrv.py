@@ -116,6 +116,7 @@ class HRV:
 
         average_period_samples = int(self.fs*average_period*60)
         average_rr_intervals = []
+        rr_samples = np.array(rr_samples)
 
         sections = int((np.max(rr_samples)/average_period_samples)+0.5)
 
