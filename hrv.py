@@ -125,8 +125,8 @@ class HRV:
 
         for i in range(sections):
 
-                idx = np.where((rr_samples>=(i*average_period_samples)) &
-                               (rr_samples<((i+1)*average_period_samples)))
+                idx = np.where((np.array(rr_samples)>=(i*average_period_samples)) &
+                               (np.array(rr_samples)<((i+1)*average_period_samples)))
                 idx = idx[0]
                 section_rr = rr_samples[idx[0]:idx[-1]+1]
 
